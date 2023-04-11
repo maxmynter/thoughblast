@@ -20,18 +20,21 @@ const MOCK_DATA = [
 
 const styles = StyleSheet.create({
   listContainer: {
+    padding: 8,
     display: "flex",
     flexDiretion: "column",
-    justifyContent: "center",
-    alignItems: "flex-center",
+    flex: 1,
+  },
+  contentContainer: {
+    flex: 1,
   },
 });
 
 const AllDaysView = () => {
   return (
-    <View>
-      <Text>Hallo </Text>
+    <View style={styles.listContainer}>
       <FlatList
+        contentContainerStyle={styles.contentContainer}
         data={MOCK_DATA}
         renderItem={({ item }) => <SingleDayView item={item} />}
       />

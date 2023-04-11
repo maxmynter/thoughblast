@@ -1,5 +1,11 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import DayItem from "./DayItem";
+
+const style = StyleSheet.create({
+  seperator: {
+    height: 5,
+  },
+});
 
 const SingleDayView = ({ item }) => {
   return (
@@ -8,6 +14,7 @@ const SingleDayView = ({ item }) => {
       <FlatList
         data={item.thoughts}
         renderItem={({ item }) => <DayItem text={item.text} />}
+        ItemSeparatorComponent={() => <View style={style.seperator}></View>}
       />
     </View>
   );
