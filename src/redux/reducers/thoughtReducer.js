@@ -5,22 +5,23 @@ const MOCK_DATA = [
       {
         text: "This is a very long text. Indeed a very intricate thought such that the thoughts are very long and need lots and lots of words as to simulate a long passage of text here in the viewport.",
         tag: "🔥",
+        id: 1,
       },
-      { text: "HEUREKAAA", tag: "💡" },
+      { text: "HEUREKAAA", tag: "💡", id: 2 },
     ],
   },
   {
     date: "Thursday, 20th of May",
     thoughts: [
-      { text: "text 22", tag: "🔥" },
-      { text: "Another example note", tag: "💡" },
+      { text: "text 22", tag: "🔥", id: 3 },
+      { text: "Another example note", tag: "💡", id: 4 },
     ],
   },
   {
     date: "Friday, 21st of May",
     thoughts: [
-      { text: "text", tag: "🔥" },
-      { text: "A simple example note", tag: "💡" },
+      { text: "text", tag: "🔥", id: 5 },
+      { text: "A simple example note", tag: "💡", id: 6 },
     ],
   },
 ];
@@ -38,15 +39,17 @@ const thoughtReducer = (state = initialState, action) => {
       return returnArray;
     }
     case "ADD_THOUGHT": {
-      action.payload;
-      const updatedArray = state.map((dayObject) =>
-        dayObject.date == action.payload.date
-          ? {
-              thoughts: [action.payload.thought, ...dayObject.thoughts],
-              ...dayObject,
-            }
-          : dayObject
-      );
+      const updatedArray = state.map((dayObject) => {
+        if (dayObject.date == action.payload.date) {
+          const returnDayObject = {
+            ...dayObject,
+            thoughts: [...dayObject.thoughts, action.payload.thought],
+          };
+          return returnDayObject;
+        } else {
+          return dayObject;
+        }
+      });
       return updatedArray;
     }
     default: {

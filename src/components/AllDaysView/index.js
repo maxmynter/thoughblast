@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
 
 const AllDaysView = () => {
   const data = useSelector((state) => state);
+
   return (
     <View style={styles.listContainer}>
       <FlatList

@@ -1,4 +1,5 @@
 import { View, StyleSheet, Text } from "react-native";
+import NewThoughtButton from "./NewThoughtButton";
 import { theme } from "../../../theme";
 
 const styles = StyleSheet.create({
@@ -13,6 +14,7 @@ const styles = StyleSheet.create({
   buttonsContainerView: {
     display: "flex",
     justifyContent: "space-between",
+    alignItems: "baseline",
     flexDirection: "row",
   },
   footerText: {
@@ -27,7 +29,8 @@ const Footer = () => {
     <View style={styles.footerBackgroundView}>
       <View style={styles.buttonsContainerView}>
         <Text style={styles.footerText}>📈</Text>
-        <Text style={styles.footerText}>✒️</Text>
+        <NewThoughtButton />
+
         <Text style={styles.footerText}>🚧</Text>
       </View>
     </View>
