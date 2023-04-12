@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     height: 5,
   },
   dateLine: { marginTop: 16, marginBottom: 8, fontWeight: "bold" },
+  SectionListContentContainer: { paddingBottom: "100%" },
 });
 
 const AllDaysView = () => {
@@ -22,6 +23,7 @@ const AllDaysView = () => {
       sectionIndex,
       itemIndex,
       animated: true,
+      viewPosition: 0.5,
     });
   };
 
@@ -46,6 +48,7 @@ const AllDaysView = () => {
   return (
     <SectionList
       sections={data}
+      contentContainerStyle={styles.SectionListContentContainer}
       ref={sectionListRef}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => {
