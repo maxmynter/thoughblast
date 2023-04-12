@@ -33,7 +33,7 @@ const NewThoughtButton = () => {
     console.log("Tapped");
     dispatch(
       addThought({
-        date: "Friday, 21st of May",
+        title: "Friday, 21st of May",
         thought: { tag: "🔥", text: "KKKKKKKKKKKKKKKKKK" },
       })
     );

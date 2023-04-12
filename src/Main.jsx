@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.uiWhite,
     margin: theme.containers.margin,
     marginTop: Constants.statusBarHeight,
-    marginBottom: Constants.statusBarHeight / 3,
     flexGrow: 1,
     flexShrink: 1,
     display: "flex",
@@ -18,6 +17,7 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
+  console.log("Render Main");
   return (
     <>
       <View style={styles.container}>

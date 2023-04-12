@@ -1,30 +1,61 @@
 import { useSelector } from "react-redux";
-import { FlatList, View, StyleSheet } from "react-native";
-import SingleDayView from "../SingleDayview";
+import { SectionList, View, StyleSheet, Text } from "react-native";
+import { useEffect, useRef } from "react";
+import getIndexOfK from "../../utils/getIndexInNDArray";
+import DayItem from "./DayItem";
 
 const styles = StyleSheet.create({
-  listContainer: {
-    padding: 8,
-    display: "flex",
-    flexDiretion: "column",
-    flex: 1,
+  seperator: {
+    height: 5,
   },
-  contentContainer: {
-    flex: 1,
-  },
+  dateLine: { marginTop: 16, marginBottom: 8, fontWeight: "bold" },
 });
 
 const AllDaysView = () => {
-  const data = useSelector((state) => state);
+  const data = useSelector((state) => state.thoughtReducer);
+  const sectionListRef = useRef();
+
+  console.log(JSON.stringify(data));
+
+  const scrollToItem = (sectionIndex, itemIndex) => {
+    sectionListRef.current.scrollToLocation({
+      sectionIndex,
+      itemIndex,
+      animated: true,
+    });
+  };
+
+  useEffect(() => {
+    const allThoughtsCreatedAtNestedArray = data.map((dayObject) =>
+      dayObject.data.map((thought) =>
+        Math.abs(new Date(thought.createdAt).getTime() - new Date().getTime())
+      )
+    );
+    const smallestDeviationFromNow = Math.min(
+      ...allThoughtsCreatedAtNestedArray.flat()
+    );
+
+    const [mostRecentSectionIndex, mostRecentItemIndex] = getIndexOfK(
+      allThoughtsCreatedAtNestedArray,
+      smallestDeviationFromNow
+    );
+    console.log([mostRecentSectionIndex, mostRecentItemIndex]);
+    scrollToItem(mostRecentSectionIndex, mostRecentItemIndex);
+  }, [data]);
 
   return (
-    <View style={styles.listContainer}>
-      <FlatList
-        contentContainerStyle={styles.contentContainer}
-        data={data}
-        renderItem={({ item }) => <SingleDayView item={item} />}
-      />
-    </View>
+    <SectionList
+      sections={data}
+      ref={sectionListRef}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => {
+        return <DayItem item={item} />;
+      }}
+      renderSectionHeader={({ section: { title } }) => {
+        return <Text style={styles.dateLine}>{title}</Text>;
+      }}
+      ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
+    />
   );
 };
 

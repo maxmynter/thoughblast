@@ -34,9 +34,10 @@ const styles = StyleSheet.create({
   tagText: {},
 });
 
-const DayItem = ({ text, tag }) => {
+const DayItem = ({ item }) => {
+  const { text, tag, id } = item;
   return (
-    <View style={styles.thoughtViewContainer}>
+    <View style={styles.thoughtViewContainer} key={id}>
       <View style={styles.tagContainer}>
         <Text style={styles.tagText}>{tag}</Text>
       </View>
