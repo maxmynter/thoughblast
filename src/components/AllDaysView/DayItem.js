@@ -1,14 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
-import { theme } from "../../../theme";
+import thoughtViewContainer from "../../Styles/thoughtViewContainer";
 
 const styles = StyleSheet.create({
   thoughtViewContainer: {
-    backgroundColor: theme.colors.uithought,
-    borderRadius: 8,
-    paddingTop: 16,
-    paddingBottom: 16,
-    paddingLeft: 8,
-    paddingRight: 8,
+    ...thoughtViewContainer,
     display: "flex",
     flexDirection: "row",
   },

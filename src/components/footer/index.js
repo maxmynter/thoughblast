@@ -24,16 +24,19 @@ const styles = StyleSheet.create({
   },
 });
 
-const Footer = () => {
+const Footer = ({ display, onCreateThought }) => {
   return (
-    <View style={styles.footerBackgroundView}>
-      <View style={styles.buttonsContainerView}>
-        <Text style={styles.footerText}>📈</Text>
-        <NewThoughtButton />
-
-        <Text style={styles.footerText}>🚧</Text>
-      </View>
-    </View>
+    <>
+      {display && (
+        <View style={styles.footerBackgroundView}>
+          <View style={styles.buttonsContainerView}>
+            <Text style={styles.footerText}>📈</Text>
+            <NewThoughtButton onClick={onCreateThought} />
+            <Text style={styles.footerText}>🚧</Text>
+          </View>
+        </View>
+      )}
+    </>
   );
 };
 

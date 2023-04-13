@@ -3,10 +3,14 @@ import { StyleSheet, View } from "react-native";
 import Footer from "./components/footer";
 import { theme } from "../theme";
 import AllDaysView from "./components/AllDaysView";
+import { useState } from "react";
+import NewThoughtCreation from "./components/newThoughtCreation";
 
 const styles = StyleSheet.create({
-  container: {
+  appContainer: {
     backgroundColor: theme.colors.uiWhite,
+  },
+  allThoughtsContainer: {
     margin: theme.containers.margin,
     marginTop: Constants.statusBarHeight,
     flexGrow: 1,
@@ -17,15 +21,26 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
-  console.log("Render Main");
+  const [newThoughtCreationInProgress, setNewThoughtCreationInProgress] =
+    useState(true);
   return (
     <>
-      <View style={styles.container}>
+      <View style={styles.allThoughtsContainer}>
         <AllDaysView />
       </View>
-      <Footer />
+      {newThoughtCreationInProgress && (
+        <NewThoughtCreation
+          setNewThoughtCreationInProgress={setNewThoughtCreationInProgress}
+        />
+      )}
+      <Footer
+        display={!newThoughtCreationInProgress}
+        onCreateThought={() => setNewThoughtCreationInProgress(true)}
+      />
     </>
   );
 };
 
 export default Main;
+
+//<View style={styles.appContainer}>

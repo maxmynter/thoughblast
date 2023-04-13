@@ -13,9 +13,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const NewThoughtButton = () => {
+const NewThoughtButton = ({ onClick }) => {
   const [scaleAnimation] = useState(new Animated.Value(1));
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   const handleTap = () => {
     Animated.sequence([
@@ -30,13 +30,15 @@ const NewThoughtButton = () => {
         useNativeDriver: true,
       }),
     ]).start();
-    console.log("Tapped");
+    onClick();
+    //console.log("Tapped");
+    /*
     dispatch(
       addThought({
         title: "Friday, 21st of May",
         thought: { tag: "🔥", text: "KKKKKKKKKKKKKKKKKK" },
       })
-    );
+    );*/
   };
   return (
     <Animated.View style={{ transform: [{ scale: scaleAnimation }] }}>
