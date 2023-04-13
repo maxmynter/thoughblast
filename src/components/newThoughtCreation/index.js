@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
 function NewThoughtCreation({ setNewThoughtCreationInProgress }) {
   const [thought, setThought] = useState(null);
   const dispatch = useDispatch();
+
   const submitThought = (tag) => {
     console.log("thought");
     dispatch(
@@ -69,6 +70,7 @@ function NewThoughtCreation({ setNewThoughtCreationInProgress }) {
     setNewThoughtCreationInProgress(false);
     setThought(null);
   };
+
   const tags = ["🔥", "💡"];
   return (
     <KeyboardAvoidingView
@@ -84,7 +86,6 @@ function NewThoughtCreation({ setNewThoughtCreationInProgress }) {
           />
         ))}
       </View>
-      {/*ToDo Here have speech bubble with arrow on tag with tag contents and click on tag jots the thought */}
       <View style={styles.newThoughtViewContainer}>
         <View style={styles.newThoughtTextInputView}>
           <TextInput
