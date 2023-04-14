@@ -36,7 +36,12 @@ const Footer = ({ display, onCreateThought }) => {
             <GoToPageButton onClick={() => navigate("/hotThoughts")}>
               <Text style={styles.footerText}>📈</Text>
             </GoToPageButton>
-            <NewThoughtButton onClick={onCreateThought} />
+            <NewThoughtButton
+              onClick={() => {
+                navigate("/");
+                onCreateThought();
+              }}
+            />
             <GoToPageButton onClick={() => navigate("/customizeTags")}>
               <Text style={styles.footerText}>🚧</Text>
             </GoToPageButton>
