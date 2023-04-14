@@ -6,11 +6,11 @@ import Main from "./src/Main";
 const App = () => {
   return (
     <>
-      <Provider store={store}>
-        <NativeRouter>
+      <NativeRouter>
+        <Provider store={store}>
           <Main />
-        </NativeRouter>
-      </Provider>
+        </Provider>
+      </NativeRouter>
     </>
   );
 };
