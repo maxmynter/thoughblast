@@ -28,19 +28,18 @@ const styles = StyleSheet.create({
 
 const Footer = ({ display, onCreateThought }) => {
   const navigate = useNavigate();
-  const onClickHotThoughts = () => {
-    navigate("/hotThoughts");
-  };
   return (
     <>
       {display && (
         <View style={styles.footerBackgroundView}>
           <View style={styles.buttonsContainerView}>
-            <GoToPageButton onClick={onClickHotThoughts}>
+            <GoToPageButton onClick={() => navigate("/hotThoughts")}>
               <Text style={styles.footerText}>📈</Text>
             </GoToPageButton>
             <NewThoughtButton onClick={onCreateThought} />
-            <Text style={styles.footerText}>🚧</Text>
+            <GoToPageButton onClick={() => navigate("/customizeTags")}>
+              <Text style={styles.footerText}>🚧</Text>
+            </GoToPageButton>
           </View>
         </View>
       )}

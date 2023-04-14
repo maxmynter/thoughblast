@@ -6,6 +6,7 @@ import AllDaysView from "./components/AllDaysView";
 import NewThoughtCreation from "./components/newThoughtCreation";
 import { theme } from "../theme";
 import HotThoughtsPinwall from "./components/HotThoughtsPinwall";
+import CustomizeTagsPage from "./components/CustomizeTagsPage";
 
 const styles = StyleSheet.create({
   appContainer: { backgroundColor: theme.colors.uiWhite, flex: 1 },
@@ -19,6 +20,7 @@ const Main = () => {
     <View style={styles.appContainer}>
       <Routes>
         <Route path="/" element={<AllDaysView />} />
+        <Route path="/customizeTags" element={<CustomizeTagsPage />} />
         <Route path="/hotThoughts" element={<HotThoughtsPinwall />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
