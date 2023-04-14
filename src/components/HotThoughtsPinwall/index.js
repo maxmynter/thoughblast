@@ -1,7 +1,8 @@
 import Constants from "expo-constants";
-import { View, Text, StyleSheet } from "react-native";
-import { theme } from "../../../theme";
+import { View, StyleSheet, FlatList } from "react-native";
 import { useSelector } from "react-redux";
+import { theme } from "../../../theme";
+import ThoughtBubble from "../AllDaysView/ThoughtBubble";
 
 const styles = StyleSheet.create({
   hotThoughtsContainer: {
@@ -12,21 +13,22 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "space-between",
   },
+  seperator: {
+    height: 5,
+  },
 });
 
 const HotThoughtsPinwall = () => {
   const data = useSelector((state) => state.thoughtReducer);
-  console.log(data);
   return (
     <View style={styles.hotThoughtsContainer}>
-      <Text>{"HOT THOUGHTS Under Construction"}</Text>
-      {data.map((thought) =>
-        thought.pinnedAtDate ? (
-          <Text key={thought.id}>
-            {thought.tag} {thought.text}{" "}
-          </Text>
-        ) : null
-      )}
+      <FlatList
+        data={data.filter((thought) => thought.pinnedAtDate)}
+        renderItem={({ item }) => {
+          return <ThoughtBubble key={item.id} item={item} />;
+        }}
+        ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
+      />
     </View>
   );
 };

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Route, Routes, Navigate } from "react-router-native";
-import Footer from "./components/footer";
 import AllDaysView from "./components/AllDaysView";
 import NewThoughtCreation from "./components/newThoughtCreation";
 import { theme } from "../theme";
 import HotThoughtsPinwall from "./components/HotThoughtsPinwall";
 import CustomizeTagsPage from "./components/CustomizeTagsPage";
+import Footer from "./components/footer";
 
 const styles = StyleSheet.create({
   appContainer: { backgroundColor: theme.colors.uiWhite, flex: 1 },
