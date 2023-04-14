@@ -38,24 +38,16 @@ const createThoughtsNestedByDatesArray = (thoughtsArray) => {
     data[addToDataOfThisIndex].data.unshift(thought);
   });
 
-  return data;
+  return data.sort((a, b) => new Date(a.title) - new Date(b.title));
 };
 
 const AllDaysView = () => {
-  const allThoughts = useSelector((state) => state.thoughtReducer);
+  const data = createThoughtsNestedByDatesArray(
+    useSelector((state) => state.thoughtReducer)
+  );
   const sectionListRef = useRef();
 
-  const data = createThoughtsNestedByDatesArray(allThoughts);
-
-  const scrollToItem = (sectionIndex, itemIndex) => {
-    sectionListRef.current.scrollToLocation({
-      sectionIndex,
-      itemIndex,
-      animated: true,
-      viewPosition: 0.5,
-    });
-  };
-  const handleScrollFailed = () => {
+  const scrollToNewestItem = () => {
     sectionListRef.current.scrollToLocation({
       sectionIndex: data.length - 1,
       itemIndex: data[data.length - 1].data.length - 1,
@@ -63,22 +55,14 @@ const AllDaysView = () => {
       viewPosition: 0.5,
     });
   };
+  const handleScrollFailed = () => {
+    console.log("Scroll failed");
+  };
 
   useEffect(() => {
-    const allThoughtsCreatedAtNestedArray = data.map((dayObject) =>
-      dayObject.data.map((thought) =>
-        Math.abs(new Date(thought.createdAt).getTime() - new Date().getTime())
-      )
-    );
-    const smallestDeviationFromNow = Math.min(
-      ...allThoughtsCreatedAtNestedArray.flat()
-    );
-
-    const [mostRecentSectionIndex, mostRecentItemIndex] = getIndexOfK(
-      allThoughtsCreatedAtNestedArray,
-      smallestDeviationFromNow
-    );
-    scrollToItem(mostRecentSectionIndex, mostRecentItemIndex);
+    if (data.length > 0) {
+      scrollToNewestItem();
+    }
   }, [data]);
 
   return (

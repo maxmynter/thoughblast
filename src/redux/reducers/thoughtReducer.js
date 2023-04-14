@@ -5,13 +5,13 @@ const MOCK_THOUGHTS = [
   {
     text: "This is a very long text. Indeed a very intricate thought such that the thoughts are very long and need lots and lots of words as to simulate a long passage of text here in the viewport.",
     tag: "🔥",
-    createdAt: new Date().toISOString(),
+    createdAt: new Date("2022-01-01").toISOString(),
     id: 1,
   },
   {
     text: "HEUREKAAA",
     tag: "💡",
-    createdAt: new Date().toISOString(),
+    createdAt: new Date("2023-01-01").toISOString(),
     id: 2,
   },
   {
