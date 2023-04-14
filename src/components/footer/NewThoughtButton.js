@@ -1,5 +1,5 @@
-import { StyleSheet, Text, Pressable, Animated } from "react-native";
-import { useState } from "react";
+import { StyleSheet, Text } from "react-native";
+import ButtonAnimationWrapper from "./ButtonAnimationWrapper";
 
 const styles = StyleSheet.create({
   NewThoughtButtonText: {
@@ -11,30 +11,10 @@ const styles = StyleSheet.create({
 });
 
 const NewThoughtButton = ({ onClick }) => {
-  const [scaleAnimation] = useState(new Animated.Value(1));
-  //const dispatch = useDispatch();
-
-  const handleTap = () => {
-    Animated.sequence([
-      Animated.timing(scaleAnimation, {
-        toValue: 1.1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(scaleAnimation, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-    ]).start();
-    onClick();
-  };
   return (
-    <Animated.View style={{ transform: [{ scale: scaleAnimation }] }}>
-      <Pressable onPress={handleTap}>
-        <Text style={styles.NewThoughtButtonText}>✒️</Text>
-      </Pressable>
-    </Animated.View>
+    <ButtonAnimationWrapper onClick={onClick}>
+      <Text style={styles.NewThoughtButtonText}>✒️</Text>
+    </ButtonAnimationWrapper>
   );
 };
 export default NewThoughtButton;

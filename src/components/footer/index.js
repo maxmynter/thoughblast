@@ -1,6 +1,7 @@
 import { View, StyleSheet, Text } from "react-native";
 import NewThoughtButton from "./NewThoughtButton";
 import { theme } from "../../../theme";
+import GoToPageButton from "./GoToPageButton";
 
 const styles = StyleSheet.create({
   footerBackgroundView: {
@@ -24,13 +25,19 @@ const styles = StyleSheet.create({
   },
 });
 
+const onClickHotThoughts = () => {
+  console.log("click");
+};
+
 const Footer = ({ display, onCreateThought }) => {
   return (
     <>
       {display && (
         <View style={styles.footerBackgroundView}>
           <View style={styles.buttonsContainerView}>
-            <Text style={styles.footerText}>📈</Text>
+            <GoToPageButton onClick={onClickHotThoughts}>
+              <Text style={styles.footerText}>📈</Text>
+            </GoToPageButton>
             <NewThoughtButton onClick={onCreateThought} />
             <Text style={styles.footerText}>🚧</Text>
           </View>
