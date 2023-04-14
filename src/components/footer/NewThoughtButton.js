@@ -1,9 +1,6 @@
 import { StyleSheet, Text, Pressable, Animated } from "react-native";
 import { useState } from "react";
 
-import { addThought } from "../../redux/actions/thoughtActions";
-import { useDispatch } from "react-redux";
-
 const styles = StyleSheet.create({
   NewThoughtButtonText: {
     paddingLeft: 45,
@@ -31,14 +28,6 @@ const NewThoughtButton = ({ onClick }) => {
       }),
     ]).start();
     onClick();
-    //console.log("Tapped");
-    /*
-    dispatch(
-      addThought({
-        title: "Friday, 21st of May",
-        thought: { tag: "🔥", text: "KKKKKKKKKKKKKKKKKK" },
-      })
-    );*/
   };
   return (
     <Animated.View style={{ transform: [{ scale: scaleAnimation }] }}>
