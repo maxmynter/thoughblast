@@ -35,7 +35,7 @@ const createThoughtsNestedByDatesArray = (thoughtsArray) => {
     const addToDataOfThisIndex = data.findIndex(
       (dataEntry) => dataEntry.title === thoughtCreatedAtDate
     );
-    data[addToDataOfThisIndex].data.push(thought);
+    data[addToDataOfThisIndex].data.unshift(thought);
   });
 
   return data;
