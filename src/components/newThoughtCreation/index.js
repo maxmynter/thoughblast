@@ -6,6 +6,7 @@ import {
   Dimensions,
   Platform,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from "react-native";
 import TagSelector from "./TagSelector";
 import thoughtViewContainer from "../../Styles/thoughtViewContainer";
@@ -53,9 +54,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
+  invisibleContainerToDetectClickOutside: {
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
+  },
 });
 
-function NewThoughtCreation({ setNewThoughtCreationInProgress }) {
+function NewThoughtCreation({
+  setNewThoughtCreationInProgress,
+  newThoughtCreationInProgress,
+}) {
   const [thought, setThought] = useState(null);
   const dispatch = useDispatch();
 
@@ -71,33 +84,49 @@ function NewThoughtCreation({ setNewThoughtCreationInProgress }) {
     setThought(null);
   };
 
+  const onClickOutside = () => {
+    console.log("Clicked Outside");
+    setNewThoughtCreationInProgress(false);
+  };
+
   const tags = ["🔥", "💡"];
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.keyboardAvoidingView}
-    >
-      <View style={styles.tagSelectorContainerView}>
-        {tags.map((tag) => (
-          <TagSelector
-            key={tag}
-            tag={tag}
-            handleSubmit={() => submitThought(tag)}
-          />
-        ))}
-      </View>
-      <View style={styles.newThoughtViewContainer}>
-        <View style={styles.newThoughtTextInputView}>
-          <TextInput
-            placeholder="Whats on your mind?"
-            multiline={true}
-            style={styles.textInputStyle}
-            autoFocus={true}
-            onChangeText={(newText) => setThought(newText)}
-          />
-        </View>
-      </View>
-    </KeyboardAvoidingView>
+    <>
+      {newThoughtCreationInProgress && (
+        <TouchableWithoutFeedback
+          style={styles.invisibleContainerToDetectClickOutside}
+          onPress={onClickOutside}
+        >
+          <View style={styles.invisibleContainerToDetectClickOutside}>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+              style={styles.keyboardAvoidingView}
+            >
+              <View style={styles.tagSelectorContainerView}>
+                {tags.map((tag) => (
+                  <TagSelector
+                    key={tag}
+                    tag={tag}
+                    handleSubmit={() => submitThought(tag)}
+                  />
+                ))}
+              </View>
+              <View style={styles.newThoughtViewContainer}>
+                <View style={styles.newThoughtTextInputView}>
+                  <TextInput
+                    placeholder="Whats on your mind?"
+                    multiline={true}
+                    style={styles.textInputStyle}
+                    autoFocus={true}
+                    onChangeText={(newText) => setThought(newText)}
+                  />
+                </View>
+              </View>
+            </KeyboardAvoidingView>
+          </View>
+        </TouchableWithoutFeedback>
+      )}
+    </>
   );
 }
 
