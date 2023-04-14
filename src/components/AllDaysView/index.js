@@ -1,6 +1,8 @@
+import Constants from "expo-constants";
 import { useSelector } from "react-redux";
 import { SectionList, View, StyleSheet, Text } from "react-native";
 import { useEffect, useRef } from "react";
+import { theme } from "../../../theme";
 import getIndexOfK from "../../utils/getIndexInNDArray";
 import DayItem from "./DayItem";
 
@@ -10,18 +12,32 @@ const styles = StyleSheet.create({
   },
   dateLine: { marginTop: 16, marginBottom: 8, fontWeight: "bold" },
   SectionListContentContainer: { paddingBottom: "100%" },
+  allThoughtsContainer: {
+    margin: theme.containers.margin,
+    marginTop: Constants.statusBarHeight,
+    flexGrow: 1,
+    flexShrink: 1,
+    display: "flex",
+    justifyContent: "space-between",
+  },
 });
 
 const AllDaysView = () => {
   const data = useSelector((state) => state.thoughtReducer);
   const sectionListRef = useRef();
 
-  console.log(JSON.stringify(data));
-
   const scrollToItem = (sectionIndex, itemIndex) => {
     sectionListRef.current.scrollToLocation({
       sectionIndex,
       itemIndex,
+      animated: true,
+      viewPosition: 0.5,
+    });
+  };
+  const handleScrollFailed = () => {
+    sectionListRef.current.scrollToLocation({
+      sectionIndex: data.length - 1,
+      itemIndex: data[data.length - 1].data.length - 1,
       animated: true,
       viewPosition: 0.5,
     });
@@ -41,24 +57,26 @@ const AllDaysView = () => {
       allThoughtsCreatedAtNestedArray,
       smallestDeviationFromNow
     );
-    console.log([mostRecentSectionIndex, mostRecentItemIndex]);
     scrollToItem(mostRecentSectionIndex, mostRecentItemIndex);
   }, [data]);
 
   return (
-    <SectionList
-      sections={data}
-      contentContainerStyle={styles.SectionListContentContainer}
-      ref={sectionListRef}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => {
-        return <DayItem item={item} />;
-      }}
-      renderSectionHeader={({ section: { title } }) => {
-        return <Text style={styles.dateLine}>{title}</Text>;
-      }}
-      ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
-    />
+    <View style={styles.allThoughtsContainer}>
+      <SectionList
+        sections={data}
+        contentContainerStyle={styles.SectionListContentContainer}
+        ref={sectionListRef}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          return <DayItem item={item} />;
+        }}
+        renderSectionHeader={({ section: { title } }) => {
+          return <Text style={styles.dateLine}>{title}</Text>;
+        }}
+        ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
+        onScrollToIndexFailed={handleScrollFailed}
+      />
+    </View>
   );
 };
 

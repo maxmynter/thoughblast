@@ -1,4 +1,3 @@
-import Constants from "expo-constants";
 import {
   StyleSheet,
   View,
@@ -14,14 +13,6 @@ import NewThoughtCreation from "./components/newThoughtCreation";
 const styles = StyleSheet.create({
   appContainer: {
     backgroundColor: theme.colors.uiWhite,
-  },
-  allThoughtsContainer: {
-    margin: theme.containers.margin,
-    marginTop: Constants.statusBarHeight,
-    flexGrow: 1,
-    flexShrink: 1,
-    display: "flex",
-    justifyContent: "space-between",
   },
   invisibleContainerToDetectClickOutside: {
     width: Dimensions.get("window").width,
@@ -44,9 +35,7 @@ const Main = () => {
   };
   return (
     <>
-      <View style={styles.allThoughtsContainer}>
-        <AllDaysView />
-      </View>
+      <AllDaysView />
       {newThoughtCreationInProgress && (
         <TouchableWithoutFeedback
           style={styles.invisibleContainerToDetectClickOutside}
@@ -68,5 +57,3 @@ const Main = () => {
 };
 
 export default Main;
-
-//<View style={styles.appContainer}>
