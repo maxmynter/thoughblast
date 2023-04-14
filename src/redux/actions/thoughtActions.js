@@ -1,6 +1,7 @@
-const checkAndAddDay = () => {
+const pinThought = (id) => {
   return {
-    type: "CHECK_AND_ADD_DAY",
+    type: "PIN_THOUGHT",
+    payload: { id },
   };
 };
 
@@ -11,4 +12,4 @@ const addThought = ({ thought }) => {
   };
 };
 
-export { checkAndAddDay, addThought };
+export { pinThought, addThought };
