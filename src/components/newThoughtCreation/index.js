@@ -76,7 +76,6 @@ function NewThoughtCreation({
     console.log("thought");
     dispatch(
       addThought({
-        title: "Friday, 21st of May",
         thought: { tag, text: thought },
       })
     );

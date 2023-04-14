@@ -22,9 +22,30 @@ const styles = StyleSheet.create({
   },
 });
 
+const createThoughtsNestedByDatesArray = (thoughtsArray) => {
+  // Creates a nested Array of Objects with props {title, data} necessary for <SectionList/>
+
+  const uniqueDays = [
+    ...new Set(thoughtsArray.map((thought) => thought.createdAt.split("T")[0])),
+  ];
+  let data = uniqueDays.map((day) => ({ data: [], title: day }));
+
+  thoughtsArray.forEach((thought) => {
+    const thoughtCreatedAtDate = thought.createdAt.split("T")[0];
+    const addToDataOfThisIndex = data.findIndex(
+      (dataEntry) => dataEntry.title === thoughtCreatedAtDate
+    );
+    data[addToDataOfThisIndex].data.push(thought);
+  });
+
+  return data;
+};
+
 const AllDaysView = () => {
-  const data = useSelector((state) => state.thoughtReducer);
+  const allThoughts = useSelector((state) => state.thoughtReducer);
   const sectionListRef = useRef();
+
+  const data = createThoughtsNestedByDatesArray(allThoughts);
 
   const scrollToItem = (sectionIndex, itemIndex) => {
     sectionListRef.current.scrollToLocation({

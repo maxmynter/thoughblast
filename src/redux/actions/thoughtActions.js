@@ -4,10 +4,10 @@ const checkAndAddDay = () => {
   };
 };
 
-const addThought = ({ title, thought }) => {
+const addThought = ({ thought }) => {
   return {
     type: "ADD_THOUGHT",
-    payload: { title, thought },
+    payload: thought,
   };
 };
 
