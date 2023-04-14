@@ -8,12 +8,13 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
+import { useState } from "react";
 import TagSelector from "./TagSelector";
 import thoughtViewContainer from "../../Styles/thoughtViewContainer";
 import { theme } from "../../../theme";
 import { useDispatch } from "react-redux";
 import { addThought } from "../../redux/actions/thoughtActions";
-import { useState } from "react";
+import elevatedShadowProps from "../../Styles/elevatedShadowProps";
 
 const styles = StyleSheet.create({
   keyboardAvoidingView: {
@@ -29,17 +30,9 @@ const styles = StyleSheet.create({
     marginRight: 16,
     marginBottom: 16,
     minHeight: 100,
-    shadowColor: theme.colors.uiBlack,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.36,
-    shadowRadius: 6.68,
-
-    elevation: 11,
     display: "flex",
     flexDirection: "row",
+    ...elevatedShadowProps,
   },
   newThoughtTextInputView: { flexShrink: 1 },
   textInputStyle: {},
@@ -47,12 +40,13 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.uiGrey,
     marginLeft: 16,
     marginRight: 16,
-    marginBottom: 8,
+    marginBottom: 16,
     padding: 8,
     borderRadius: 8,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
+    ...elevatedShadowProps,
   },
   invisibleContainerToDetectClickOutside: {
     width: Dimensions.get("window").width,
@@ -101,15 +95,6 @@ function NewThoughtCreation({
               behavior={Platform.OS === "ios" ? "padding" : "height"}
               style={styles.keyboardAvoidingView}
             >
-              <View style={styles.tagSelectorContainerView}>
-                {tags.map((tag) => (
-                  <TagSelector
-                    key={tag}
-                    tag={tag}
-                    handleSubmit={() => submitThought(tag)}
-                  />
-                ))}
-              </View>
               <View style={styles.newThoughtViewContainer}>
                 <View style={styles.newThoughtTextInputView}>
                   <TextInput
@@ -120,6 +105,16 @@ function NewThoughtCreation({
                     onChangeText={(newText) => setThought(newText)}
                   />
                 </View>
+              </View>
+
+              <View style={styles.tagSelectorContainerView}>
+                {tags.map((tag) => (
+                  <TagSelector
+                    key={tag}
+                    tag={tag}
+                    handleSubmit={() => submitThought(tag)}
+                  />
+                ))}
               </View>
             </KeyboardAvoidingView>
           </View>
