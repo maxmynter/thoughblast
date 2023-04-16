@@ -4,6 +4,7 @@ import { SectionList, View, StyleSheet, Text } from "react-native";
 import { useEffect, useRef } from "react";
 import { theme } from "../../Styles/theme";
 import DayItem from "./DayItem";
+import Header from "../Header";
 
 const styles = StyleSheet.create({
   seperator: {
@@ -66,6 +67,7 @@ const AllDaysView = () => {
 
   return (
     <View style={styles.allThoughtsContainer}>
+      <Header text="Thoughts" />
       <SectionList
         sections={data}
         contentContainerStyle={styles.SectionListContentContainer}

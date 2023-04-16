@@ -3,6 +3,7 @@ import { View, StyleSheet, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 import { theme } from "../../Styles/theme";
 import ThoughtBubble from "../AllDaysView/ThoughtBubble";
+import Header from "../Header";
 
 const styles = StyleSheet.create({
   hotThoughtsContainer: {
@@ -22,6 +23,7 @@ const HotThoughtsPinwall = () => {
   const data = useSelector((state) => state.thoughtReducer);
   return (
     <View style={styles.hotThoughtsContainer}>
+      <Header text="Pinned Thoughts" />
       <FlatList
         data={data.filter((thought) => thought.pinnedAtDate)}
         renderItem={({ item }) => {
