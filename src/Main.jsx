@@ -6,7 +6,7 @@ import NewThoughtCreation from "./components/newThoughtCreation";
 import { theme } from "../theme";
 import HotThoughtsPinwall from "./components/HotThoughtsPinwall";
 import CustomizeTagsPage from "./components/CustomizeTagsPage";
-import Footer from "./components/footer";
+import Footer from "./components/Footer";
 
 const styles = StyleSheet.create({
   appContainer: { backgroundColor: theme.colors.uiWhite, flex: 1 },
