@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 const NewThoughtButton = ({ onClick }) => {
   return (
     <ButtonAnimationWrapper onClick={onClick}>
-      <Text style={styles.NewThoughtButtonText}>✒️</Text>
+      <Text style={styles.NewThoughtButtonText}>💭</Text>
     </ButtonAnimationWrapper>
   );
 };

@@ -35,7 +35,7 @@ const Footer = ({ display, onCreateThought }) => {
         <View style={styles.footerBackgroundView}>
           <View style={styles.buttonsContainerView}>
             <GoToPageButton onClick={() => navigate("/hotThoughts")}>
-              <Text style={styles.footerText}>📈</Text>
+              <Text style={styles.footerText}>📌</Text>
             </GoToPageButton>
             <NewThoughtButton
               onClick={() => {
@@ -44,7 +44,7 @@ const Footer = ({ display, onCreateThought }) => {
               }}
             />
             <GoToPageButton onClick={() => navigate("/customizeTags")}>
-              <Text style={styles.footerText}>🚧</Text>
+              <Text style={styles.footerText}>🏷️</Text>
             </GoToPageButton>
           </View>
         </View>
