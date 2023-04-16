@@ -2,7 +2,7 @@ import Constants from "expo-constants";
 import { useSelector } from "react-redux";
 import { SectionList, View, StyleSheet, Text } from "react-native";
 import { useEffect, useRef } from "react";
-import { theme } from "../../../theme";
+import { theme } from "../../Styles/theme";
 import DayItem from "./DayItem";
 
 const styles = StyleSheet.create({

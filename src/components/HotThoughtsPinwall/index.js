@@ -1,7 +1,7 @@
 import Constants from "expo-constants";
 import { View, StyleSheet, FlatList } from "react-native";
 import { useSelector } from "react-redux";
-import { theme } from "../../../theme";
+import { theme } from "../../Styles/theme";
 import ThoughtBubble from "../AllDaysView/ThoughtBubble";
 
 const styles = StyleSheet.create({

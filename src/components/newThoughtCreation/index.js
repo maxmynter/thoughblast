@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import TagSelector from "./TagSelector";
 import thoughtViewContainer from "../../Styles/thoughtViewContainer";
-import { theme } from "../../../theme";
+import { theme } from "../../Styles/theme";
 import { useDispatch } from "react-redux";
 import { addThought } from "../../redux/actions/thoughtActions";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";

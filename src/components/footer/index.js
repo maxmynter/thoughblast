@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text } from "react-native";
 import { useNavigate } from "react-router-dom";
 import NewThoughtButton from "./NewThoughtButton";
-import { theme } from "../../../theme";
+import { theme } from "../../Styles/theme";
 import GoToPageButton from "./GoToPageButton";
 
 const styles = StyleSheet.create({

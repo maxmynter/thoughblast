@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Route, Routes, Navigate } from "react-router-native";
 import AllDaysView from "./components/AllDaysView";
 import NewThoughtCreation from "./components/newThoughtCreation";
-import { theme } from "../theme";
+import { theme } from "./Styles/theme";
 import HotThoughtsPinwall from "./components/HotThoughtsPinwall";
 import CustomizeTagsPage from "./components/CustomizeTagsPage";
 import Footer from "./components/Footer";

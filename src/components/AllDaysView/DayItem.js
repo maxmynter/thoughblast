@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useRef } from "react";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { pinThought } from "../../redux/actions/thoughtActions";
-import { theme } from "../../../theme";
+import { theme } from "../../Styles/theme";
 import ThoughtBubble from "./ThoughtBubble";
 
 const styles = StyleSheet.create({

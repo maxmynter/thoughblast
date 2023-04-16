@@ -1,7 +1,8 @@
 import Constants from "expo-constants";
 import { View, Text, StyleSheet } from "react-native";
-import { theme } from "../../../theme";
+import { theme } from "../../Styles/theme";
 import { useSelector } from "react-redux";
+import headerTextStyles from "../../Styles/headerText";
 
 const styles = StyleSheet.create({
   customizeTagsPageContainer: {
@@ -12,13 +13,14 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "space-between",
   },
+  headerText: headerTextStyles,
 });
 
 const CustomizeTagsPage = () => {
   const tagData = useSelector((state) => state.tagReducer);
   return (
     <View style={styles.customizeTagsPageContainer}>
-      <Text>{" TAGS PAGE Under Construction"}</Text>
+      <Text style={styles.headerText}>{" TAGS PAGE Under Construction"}</Text>
       {tagData.map((tag) => (
         <View key={tag.id}>
           <Text>

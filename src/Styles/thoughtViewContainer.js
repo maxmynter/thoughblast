@@ -1,4 +1,4 @@
-import { theme } from "../../theme";
+import { theme } from "./theme";
 const thoughtViewContainer = {
   backgroundColor: theme.colors.uithought,
   borderRadius: 8,
