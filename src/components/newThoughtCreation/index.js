@@ -86,45 +86,42 @@ function NewThoughtCreation({
   return (
     <>
       {newThoughtCreationInProgress && (
-        <TouchableWithoutFeedback
-          style={styles.invisibleContainerToDetectClickOutside}
-          onPress={onClickOutside}
-        >
-          <View style={styles.invisibleContainerToDetectClickOutside}>
-            <KeyboardAvoidingView
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-              style={styles.keyboardAvoidingView}
-            >
-              <View style={styles.newThoughtViewContainer}>
-                <View style={styles.newThoughtTextInputView}>
-                  <TextInput
-                    placeholder="Whats on your mind?"
-                    multiline={true}
-                    style={styles.textInputStyle}
-                    autoFocus={true}
-                    onChangeText={(newText) => setThought(newText)}
-                  />
-                </View>
+        <>
+          <TouchableWithoutFeedback onPress={onClickOutside}>
+            <View style={styles.invisibleContainerToDetectClickOutside}></View>
+          </TouchableWithoutFeedback>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.keyboardAvoidingView}
+          >
+            <View style={styles.newThoughtViewContainer}>
+              <View style={styles.newThoughtTextInputView}>
+                <TextInput
+                  placeholder="Whats on your mind?"
+                  multiline={true}
+                  style={styles.textInputStyle}
+                  autoFocus={true}
+                  onChangeText={(newText) => setThought(newText)}
+                />
               </View>
+            </View>
 
-              <View style={styles.tagSelectorContainerView}>
-                {tags.map((tag) => (
-                  <TagSelector
-                    key={tag}
-                    tag={tag}
-                    handleSubmit={() => submitThought(tag)}
-                  />
-                ))}
-              </View>
-            </KeyboardAvoidingView>
-          </View>
-        </TouchableWithoutFeedback>
+            <View style={styles.tagSelectorContainerView}>
+              {tags.map((tag) => (
+                <TagSelector
+                  key={tag}
+                  tag={tag}
+                  handleSubmit={() => submitThought(tag)}
+                />
+              ))}
+            </View>
+          </KeyboardAvoidingView>
+        </>
       )}
     </>
   );
 }
 
 export default NewThoughtCreation;
-//Todo, make thought disappear when click outside
 //Persist text when making thought away
 //Add button to discard everything written and blast new thought
