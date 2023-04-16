@@ -12,7 +12,7 @@ import { useState } from "react";
 import TagSelector from "./TagSelector";
 import thoughtViewContainer from "../../Styles/thoughtViewContainer";
 import { theme } from "../../Styles/theme";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addThought } from "../../redux/actions/thoughtActions";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
 
@@ -63,6 +63,7 @@ function NewThoughtCreation({
   setNewThoughtCreationInProgress,
   newThoughtCreationInProgress,
 }) {
+  const tags = useSelector((state) => state.tagReducer);
   const [thought, setThought] = useState(null);
   const dispatch = useDispatch();
 
@@ -70,7 +71,7 @@ function NewThoughtCreation({
     console.log("thought");
     dispatch(
       addThought({
-        thought: { tag, text: thought },
+        thought: { tag: tag.symbol, text: thought },
       })
     );
     setNewThoughtCreationInProgress(false);
@@ -82,7 +83,6 @@ function NewThoughtCreation({
     setNewThoughtCreationInProgress(false);
   };
 
-  const tags = ["🔥", "💡"];
   return (
     <>
       {newThoughtCreationInProgress && (
@@ -109,8 +109,8 @@ function NewThoughtCreation({
             <View style={styles.tagSelectorContainerView}>
               {tags.map((tag) => (
                 <TagSelector
-                  key={tag}
-                  tag={tag}
+                  key={tag.id}
+                  tag={tag.symbol}
                   handleSubmit={() => submitThought(tag)}
                 />
               ))}
