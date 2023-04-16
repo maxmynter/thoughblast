@@ -17,6 +17,9 @@ const tagReducer = (state = initialState, action) => {
         tag.id === action.payload.id ? { ...tag, status: "deleted" } : tag
       );
     }
+    case "RESET": {
+      return MOCK_TAGS;
+    }
     default: {
       return state;
     }

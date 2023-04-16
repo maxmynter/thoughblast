@@ -1,5 +1,4 @@
 const addTag = (tag) => {
-  console.log("IN TAG", tag);
   return {
     type: "ADD_TAG",
     payload: tag,
@@ -13,4 +12,8 @@ const removeTag = ({ id }) => {
   };
 };
 
-export { addTag, removeTag };
+const resetTags = () => {
+  return { type: "RESET" };
+};
+
+export { resetTags, addTag, removeTag };

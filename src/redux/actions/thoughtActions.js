@@ -12,4 +12,10 @@ const addThought = ({ thought }) => {
   };
 };
 
-export { pinThought, addThought };
+const resetThoughts = () => {
+  return {
+    type: "RESET",
+  };
+};
+
+export { resetThoughts, pinThought, addThought };
