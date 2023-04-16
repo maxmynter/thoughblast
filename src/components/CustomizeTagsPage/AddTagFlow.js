@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     ...thoughtViewContainer,
     ...elevatedShadowProps,
-    backgroundColor: theme.colors.uiGrey,
+    backgroundColor: theme.colors.uiBlack,
     display: "flex",
     alignItems: "center",
     marginTop: 8,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   keyboardAvoidingView: {},
   tagDescriptionInputStyle: {
     ...thoughtViewContainer,
-    backgroundColor: theme.colors.uiGrey,
+    backgroundColor: theme.colors.uiBlack,
     color: theme.colors.uiWhite,
   },
   invisibleContainerToDetectClickOutside: {
@@ -77,7 +77,8 @@ const AddTagFlow = () => {
                 </Text>
               )}
               <TextInput
-                placeholder="Tag description"
+                placeholderTextColor={theme.colors.uiWhite}
+                placeholder="Tag Description"
                 style={styles.tagDescriptionInputStyle}
                 multiline={true}
                 onChangeText={(newText) => {

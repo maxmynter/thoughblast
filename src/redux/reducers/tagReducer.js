@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 const MOCK_TAGS = [
-  { symbol: "🔥", description: "Fire Ideas", id: 22 },
+  { symbol: "🔥", description: "Life Events", id: 22 },
   { symbol: "💡", description: "Feature Ideas", id: 33 },
 ];
 

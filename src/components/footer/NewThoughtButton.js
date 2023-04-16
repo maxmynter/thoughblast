@@ -1,20 +1,24 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import ButtonAnimationWrapper from "./ButtonAnimationWrapper";
+import footerText from "../../Styles/footerText";
+import { theme } from "../../Styles/theme";
 
 const styles = StyleSheet.create({
-  NewThoughtButtonText: {
-    paddingLeft: 45,
-    paddingRight: 45,
-    fontSize: 46,
-    paddingBottom: 8,
-  },
+  NewThoughtButtonText: { ...footerText },
 });
 
-const NewThoughtButton = ({ onClick }) => {
+const NewThoughtButton = (props) => {
   return (
-    <ButtonAnimationWrapper onClick={onClick}>
-      <Text style={styles.NewThoughtButtonText}>💭</Text>
-    </ButtonAnimationWrapper>
+    <View
+      style={{
+        backgroundColor: props.isOnPage ? theme.colors.uiGrey : null,
+        borderRadius: 16,
+      }}
+    >
+      <ButtonAnimationWrapper onClick={props.onClick}>
+        <Text style={styles.NewThoughtButtonText}>💭</Text>
+      </ButtonAnimationWrapper>
+    </View>
   );
 };
 export default NewThoughtButton;

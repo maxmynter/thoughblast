@@ -10,7 +10,12 @@ const styles = StyleSheet.create({
   seperator: {
     height: 5,
   },
-  dateLine: { marginTop: 16, marginBottom: 8, fontWeight: "bold" },
+  dateLine: {
+    marginTop: 8,
+    marginBottom: 8,
+    fontWeight: "bold",
+    color: theme.colors.uiWhite,
+  },
   SectionListContentContainer: { paddingBottom: "100%" },
   allThoughtsContainer: {
     margin: theme.containers.margin,
@@ -19,6 +24,20 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     display: "flex",
     justifyContent: "space-between",
+  },
+  sectionHeaderViewContainer: {
+    display: "flex",
+    padding: 8,
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  sectionHeaderDateWrapper: {
+    backgroundColor: theme.colors.uiGrey,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    borderRadius: 20,
   },
 });
 
@@ -77,7 +96,13 @@ const AllDaysView = () => {
           return <DayItem item={item} />;
         }}
         renderSectionHeader={({ section: { title } }) => {
-          return <Text style={styles.dateLine}>{title}</Text>;
+          return (
+            <View style={styles.sectionHeaderViewContainer}>
+              <View style={styles.sectionHeaderDateWrapper}>
+                <Text style={styles.dateLine}>{title}</Text>
+              </View>
+            </View>
+          );
         }}
         ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
         onScrollToIndexFailed={handleScrollFailed}

@@ -1,8 +1,9 @@
 import { View, StyleSheet, Text } from "react-native";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import NewThoughtButton from "./NewThoughtButton";
 import { theme } from "../../Styles/theme";
 import GoToPageButton from "./GoToPageButton";
+import footerText from "../../Styles/footerText";
 
 const styles = StyleSheet.create({
   footerBackgroundView: {
@@ -10,7 +11,8 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     flexDirection: "row",
-    paddingBottom: 3 * theme.containers.margin,
+    borderRadius: 16,
+    paddingBottom: 2 * theme.containers.margin,
     paddingTop: theme.containers.margin,
     height: theme.containers.footerHeight,
   },
@@ -19,31 +21,39 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "baseline",
     flexDirection: "row",
+    paddingLeft: 8,
+    paddingRight: 8,
   },
-  footerText: {
-    paddingLeft: 45,
-    paddingRight: 45,
-    fontSize: 34,
-  },
+  footerText: { ...footerText },
 });
 
 const Footer = ({ display, onCreateThought }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   return (
     <>
       {display && (
         <View style={styles.footerBackgroundView}>
           <View style={styles.buttonsContainerView}>
-            <GoToPageButton onClick={() => navigate("/hotThoughts")}>
+            <GoToPageButton
+              isOnPage={location.pathname === "/hotThoughts"}
+              rightBorder={true}
+              onClick={() => navigate("/hotThoughts")}
+            >
               <Text style={styles.footerText}>📌</Text>
             </GoToPageButton>
             <NewThoughtButton
+              isOnPage={location.pathname === "/"}
               onClick={() => {
                 navigate("/");
                 onCreateThought();
               }}
             />
-            <GoToPageButton onClick={() => navigate("/customizeTags")}>
+            <GoToPageButton
+              isOnPage={location.pathname === "/customizeTags"}
+              leftBorder={true}
+              onClick={() => navigate("/customizeTags")}
+            >
               <Text style={styles.footerText}>🏷️</Text>
             </GoToPageButton>
           </View>

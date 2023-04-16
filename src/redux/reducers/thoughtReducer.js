@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const MOCK_THOUGHTS = [
   {
-    text: "This is a very long text. Indeed a very intricate thought such that the thoughts are very long and need lots and lots of words as to simulate a long passage of text here in the viewport.",
+    text: "Hey buildspace, hey twitter, this is what I'm building for N&W S3. If you are reading this, you spend a lot of attention. Great. Tweet @ me, or slide in my DMs to get access and shape the development of the app. I would really appreciate that. ",
     tag: "🔥",
     createdAt: new Date("2022-01-01").toISOString(),
     pinnedAtDate: null,
@@ -17,14 +17,14 @@ const MOCK_THOUGHTS = [
     id: 2,
   },
   {
-    text: "text 22",
+    text: "Coding, all day... Keepin the commit history green. Life is good.",
     tag: "🔥",
     createdAt: new Date().toISOString(),
     pinnedAtDate: null,
     id: 3,
   },
   {
-    text: "Another example note",
+    text: "Make the design better. 4 real. ",
     tag: "💡",
     createdAt: new Date().toISOString(),
     pinnedAtDate: null,

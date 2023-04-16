@@ -4,7 +4,7 @@ import { theme } from "../../Styles/theme";
 import { useSelector } from "react-redux";
 import Header from "../Header";
 import ThoughtBubble from "../AllDaysView/ThoughtBubble";
-import AddTagFlow from "./addTagFlow";
+import AddTagFlow from "./AddTagFlow";
 
 const styles = StyleSheet.create({
   customizeTagsPageContainer: {
