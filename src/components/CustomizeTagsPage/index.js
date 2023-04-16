@@ -1,8 +1,9 @@
 import Constants from "expo-constants";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { theme } from "../../Styles/theme";
 import { useSelector } from "react-redux";
 import Header from "../Header";
+import ThoughtBubble from "../AllDaysView/ThoughtBubble";
 
 const styles = StyleSheet.create({
   customizeTagsPageContainer: {
@@ -13,6 +14,9 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "space-between",
   },
+  seperator: {
+    height: 5,
+  },
 });
 
 const CustomizeTagsPage = () => {
@@ -20,14 +24,18 @@ const CustomizeTagsPage = () => {
   return (
     <View style={styles.customizeTagsPageContainer}>
       <Header text={"Tags"} />
-      {tagData.map((tag) => (
-        <View key={tag.id}>
-          <Text>
-            {tag.symbol}
-            {tag.description}
-          </Text>
-        </View>
-      ))}
+      <FlatList
+        data={tagData}
+        renderItem={({ item }) => {
+          return (
+            <ThoughtBubble
+              key={item.id}
+              item={{ text: item.description, tag: item.symbol }}
+            />
+          );
+        }}
+        ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
+      />
     </View>
   );
 };

@@ -14,7 +14,7 @@ const tagReducer = (state = initialState, action) => {
     }
     case "REMOVE_TAG": {
       return state.map((tag) =>
-        tag.id === action.payload ? { ...tag, status: "deleted" } : tag
+        tag.id === action.payload.id ? { ...tag, status: "deleted" } : tag
       );
     }
     default: {
