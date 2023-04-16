@@ -1,4 +1,5 @@
-const addTag = ({ tag }) => {
+const addTag = (tag) => {
+  console.log("IN TAG", tag);
   return {
     type: "ADD_TAG",
     payload: tag,

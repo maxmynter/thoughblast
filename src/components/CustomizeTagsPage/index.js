@@ -1,9 +1,10 @@
 import Constants from "expo-constants";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { theme } from "../../Styles/theme";
 import { useSelector } from "react-redux";
 import Header from "../Header";
 import ThoughtBubble from "../AllDaysView/ThoughtBubble";
+import AddTagFlow from "./AddTagFlow";
 
 const styles = StyleSheet.create({
   customizeTagsPageContainer: {
@@ -36,6 +37,7 @@ const CustomizeTagsPage = () => {
         }}
         ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
       />
+      <AddTagFlow />
     </View>
   );
 };

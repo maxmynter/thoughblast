@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingBottom: 3 * theme.containers.margin,
     paddingTop: theme.containers.margin,
+    height: theme.containers.footerHeight,
   },
   buttonsContainerView: {
     display: "flex",
