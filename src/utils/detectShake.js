@@ -4,6 +4,7 @@ import { Accelerometer } from "expo-sensors";
 const THRESHOLD = 150;
 export class ShakeEventExpo {
   static addListener(handler) {
+    let lastShakeDetection = new Date.now();
     let last_x, last_y, last_z;
     let lastUpdate = 0;
     Accelerometer.addListener((accelerometerData) => {
@@ -14,7 +15,7 @@ export class ShakeEventExpo {
         lastUpdate = currTime;
         let speed =
           (Math.abs(x + y + z - last_x - last_y - last_z) / diffTime) * 10000;
-        if (speed > THRESHOLD) {
+        if (speed > THRESHOLD && new Date.now() - lastShakeDetection > 500) {
           handler();
         }
         last_x = x;
