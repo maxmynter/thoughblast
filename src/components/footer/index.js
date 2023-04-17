@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
 });
 
 const Footer = ({ display, onCreateThought }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   return (

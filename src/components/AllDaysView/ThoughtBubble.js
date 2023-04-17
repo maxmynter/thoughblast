@@ -30,18 +30,27 @@ const styles = StyleSheet.create({
 });
 
 const ThoughtBubble = ({ item }) => {
-  const { text, tag, id } = item;
-
-  return (
-    <View style={styles.thoughtViewContainer} key={id}>
-      <View style={styles.tagContainer}>
-        <Text style={styles.tagText}>{tag}</Text>
+  const { thoughtThread, tag, id } = item;
+  if (thoughtThread && tag && id) {
+    return (
+      <View style={styles.thoughtViewContainer} key={id}>
+        <View style={styles.tagContainer}>
+          <Text style={styles.tagText}>{tag}</Text>
+        </View>
+        <View style={styles.noteContainer}>
+          {thoughtThread.map((entry) => {
+            return (
+              <Text key={entry.id} style={styles.notetext}>
+                {entry.text}
+              </Text>
+            );
+          })}
+        </View>
       </View>
-      <View style={styles.noteContainer}>
-        <Text style={styles.notetext}>{text}</Text>
-      </View>
-    </View>
-  );
+    );
+  } else {
+    console.log("Could not render", thoughtThread, tag, id);
+  }
 };
 
 export default ThoughtBubble;

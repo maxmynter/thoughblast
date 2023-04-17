@@ -5,16 +5,20 @@ import {
   StyleSheet,
   Dimensions,
   Platform,
+  Text,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  FlatList,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { v4 as uuidv4 } from "uuid";
 import TagSelector from "./TagSelector";
 import thoughtViewContainer from "../../Styles/thoughtViewContainer";
 import { theme } from "../../Styles/theme";
 import { useDispatch, useSelector } from "react-redux";
 import { addThought } from "../../redux/actions/thoughtActions";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
+import { ShakeEventExpo } from "../../utils/detectShake";
 
 const styles = StyleSheet.create({
   keyboardAvoidingView: {
@@ -59,22 +63,55 @@ const styles = StyleSheet.create({
   },
 });
 
+const getAIAnswer = async (thoughts) => {
+  console.log("Todo, make API CALL to open AI with thoughts", thoughts);
+  return "Why";
+};
+
 function NewThoughtCreation({
   setNewThoughtCreationInProgress,
   newThoughtCreationInProgress,
 }) {
-  const tags = useSelector((state) => state.tagReducer);
-  const [thought, setThought] = useState(null);
   const dispatch = useDispatch();
+  const tags = useSelector((state) => state.tagReducer);
+  const [thought, _setThought] = useState(null);
+  const [thoughtThread, _setThoughtThread] = useState([]);
+  const [aiAnswers, setAIAnswers] = useState(false);
+  const thoughtRef = useRef(thought);
+  const thoughtThreadRef = useRef(thoughtThread);
 
-  const submitThought = (tag) => {
-    console.log("thought");
+  const setThought = (data) => {
+    thoughtRef.current = data;
+    _setThought(data);
+  };
+
+  const setThoughtThread = (data) => {
+    thoughtThreadRef.current = data;
+    _setThoughtThread(data);
+  };
+
+  const submitThought = async (tag) => {
+    console.log("Thought ");
     dispatch(
       addThought({
-        thought: { tag: tag.symbol, text: thought },
+        thought: {
+          tag: tag.symbol,
+
+          thoughtThread: thought
+            ? [
+                ...thoughtThreadRef.current,
+                {
+                  text: thoughtRef.current,
+                  from: "user",
+                  id: uuidv4(),
+                },
+              ]
+            : thoughtThreadRef.current,
+        },
       })
     );
     setNewThoughtCreationInProgress(false);
+    setThoughtThread([]);
     setThought(null);
   };
 
@@ -82,6 +119,37 @@ function NewThoughtCreation({
     console.log("Clicked Outside");
     setNewThoughtCreationInProgress(false);
   };
+
+  useEffect(() => {
+    console.log("useEffect");
+    ShakeEventExpo.addListener(async () => {
+      setAIAnswers(true);
+      console.log("thought, log in Listener", thought);
+      console.log("DETECTED SHAKEEE");
+      const aiThought = await getAIAnswer([
+        ...thoughtThreadRef.current,
+        { text: thoughtRef.current },
+      ]);
+
+      const updatedThoughts = [
+        ...thoughtThreadRef.current,
+        {
+          text: thoughtRef.current,
+          from: "user",
+          id: uuidv4(),
+        },
+        {
+          text: aiThought,
+          from: "ai",
+          id: uuidv4(),
+        },
+      ];
+      console.log("Updated Thoughts", updatedThoughts);
+      setThoughtThread(updatedThoughts);
+      setThought(null);
+      setAIAnswers(false);
+    });
+  }, []);
 
   return (
     <>
@@ -94,6 +162,19 @@ function NewThoughtCreation({
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.keyboardAvoidingView}
           >
+            <FlatList
+              data={thoughtThread}
+              renderItem={({ item }) => {
+                console.log("WHAT? ..... ", item);
+                return (
+                  <View key={item.id} style={styles.newThoughtViewContainer}>
+                    <Text key={item.id + "from"}>{item.from}: </Text>
+                    <Text key={item.id}>{item.text}</Text>
+                  </View>
+                );
+              }}
+            />
+
             <View style={styles.newThoughtViewContainer}>
               <View style={styles.newThoughtTextInputView}>
                 <TextInput
@@ -101,8 +182,12 @@ function NewThoughtCreation({
                   multiline={true}
                   style={styles.textInputStyle}
                   autoFocus={true}
-                  onChangeText={(newText) => setThought(newText)}
+                  value={thought}
+                  onChangeText={(newText) => {
+                    setThought(newText);
+                  }}
                 />
+                {aiAnswers ? <Text>{"Thinking"}</Text> : null}
               </View>
             </View>
 

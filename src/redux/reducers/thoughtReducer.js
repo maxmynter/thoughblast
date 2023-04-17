@@ -3,28 +3,42 @@ import { v4 as uuidv4 } from "uuid";
 
 const MOCK_THOUGHTS = [
   {
-    text: "Hey buildspace, hey twitter, this is what I'm building for N&W S3. If you are reading this, you spend a lot of attention. Great. Tweet @ me, or slide in my DMs to get access and shape the development of the app. I would really appreciate that. ",
+    thoughtThread: [
+      {
+        id: 31,
+        from: "user",
+        text: "Hey buildspace, hey twitter, this is what I'm building for N&W S3. If you are reading this, you spend a lot of attention. Great. Tweet @ me, or slide in my DMs to get access and shape the development of the app. I would really appreciate that. ",
+      },
+    ],
     tag: "🔥",
     createdAt: new Date("2022-01-01").toISOString(),
     pinnedAtDate: null,
     id: 1,
   },
   {
-    text: "HEUREKAAA",
+    thoughtThread: [{ id: 32, from: "user", text: "HEUREKAAA" }],
     tag: "💡",
     createdAt: new Date("2023-01-01").toISOString(),
     pinnedAtDate: null,
     id: 2,
   },
   {
-    text: "Coding, all day... Keepin the commit history green. Life is good.",
+    thoughtThread: [
+      {
+        id: 33,
+        from: "user",
+        text: "Coding, all day... Keepin the commit history green. Life is good.",
+      },
+    ],
     tag: "🔥",
     createdAt: new Date().toISOString(),
     pinnedAtDate: null,
     id: 3,
   },
   {
-    text: "Make the design better. 4 real. ",
+    thoughtThread: [
+      { id: 34, from: "user", text: "Make the design better. 4 real. " },
+    ],
     tag: "💡",
     createdAt: new Date().toISOString(),
     pinnedAtDate: null,
