@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     flexWrap: "wrap",
-    justifyContent: "flex-start",
+    justifyContent: "space-around",
     ...elevatedShadowProps,
   },
   invisibleContainerToDetectClickOutside: {

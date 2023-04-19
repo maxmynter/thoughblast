@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
-
+/*
 const MOCK_TAGS = [
   { symbol: "🔥", description: "Life Events", id: 22 },
   { symbol: "💡", description: "Feature Ideas", id: 33 },
-];
+];*/
 
-const initialState = MOCK_TAGS;
+const initialState = [{ symbol: "💡", description: "Idea", id: 33 }];
 
 const tagReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -18,7 +18,7 @@ const tagReducer = (state = initialState, action) => {
       );
     }
     case "RESET": {
-      return MOCK_TAGS;
+      return state;
     }
     default: {
       return state;
