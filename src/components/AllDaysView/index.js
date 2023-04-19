@@ -96,10 +96,19 @@ const AllDaysView = () => {
           return <DayItem item={item} />;
         }}
         renderSectionHeader={({ section: { title } }) => {
+          const dateOptions = {
+            weekday: "short",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          };
+
           return (
             <View style={styles.sectionHeaderViewContainer}>
               <View style={styles.sectionHeaderDateWrapper}>
-                <Text style={styles.dateLine}>{title}</Text>
+                <Text style={styles.dateLine}>
+                  {new Date(title).toLocaleDateString("en-US", dateOptions)}
+                </Text>
               </View>
             </View>
           );
