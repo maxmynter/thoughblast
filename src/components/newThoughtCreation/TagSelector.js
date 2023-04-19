@@ -1,9 +1,28 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
+import { theme } from "../../Styles/theme";
+
+const minHeightAndLineHeight = 35;
+
+const styles = StyleSheet.create({
+  tagSelectorTagViewWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    minWidth: 75,
+    minHeight: minHeightAndLineHeight,
+    borderColor: theme.colorPalette[50],
+  },
+  tagSelectorText: {
+    flexGrow: 1,
+    lineHeight: minHeightAndLineHeight,
+  },
+});
 
 const TagSelectorTag = ({ tag }) => {
   return (
-    <View>
-      <Text>{tag}</Text>
+    <View style={styles.tagSelectorTagViewWrapper}>
+      <Text style={styles.tagSelectorText}>{tag}</Text>
     </View>
   );
 };
