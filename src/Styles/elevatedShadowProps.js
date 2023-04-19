@@ -1,6 +1,6 @@
 import { theme } from "./theme";
 const elevatedShadowProps = {
-  shadowColor: theme.colors.uiBlack,
+  shadowColor: theme.colorPalette[950],
   shadowOffset: {
     width: 0,
     height: 5,

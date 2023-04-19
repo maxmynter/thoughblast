@@ -21,16 +21,16 @@ const styles = StyleSheet.create({
   buttonContainer: {
     ...thoughtViewContainer,
     ...elevatedShadowProps,
-    backgroundColor: theme.colors.uiBlack,
+    backgroundColor: theme.colorPalette[950],
     display: "flex",
     alignItems: "center",
     marginTop: 8,
   },
-  buttonText: { color: theme.colors.uiWhite, fontWeight: 600 },
+  buttonText: { color: theme.colorPalette[100], fontWeight: 600 },
   keyboardAvoidingView: {},
   tagDescriptionInputStyle: {
     ...thoughtViewContainer,
-    backgroundColor: theme.colors.uiBlack,
+    backgroundColor: theme.colorPalette[950],
     color: theme.colors.uiWhite,
   },
   invisibleContainerToDetectClickOutside: {

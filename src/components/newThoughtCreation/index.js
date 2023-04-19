@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   newThoughtTextInputView: { flexShrink: 1 },
   textInputStyle: {},
   tagSelectorContainerView: {
-    backgroundColor: theme.colors.uiGrey,
+    backgroundColor: theme.colorPalette[950],
     marginLeft: 16,
     marginRight: 16,
     marginBottom: 16,

@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 8,
     fontWeight: "bold",
-    color: theme.colors.uiWhite,
+    color: theme.colorPalette[100],
   },
   SectionListContentContainer: { paddingBottom: "100%" },
   allThoughtsContainer: {
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   sectionHeaderDateWrapper: {
-    backgroundColor: theme.colors.uiGrey,
+    backgroundColor: theme.colorPalette[950],
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

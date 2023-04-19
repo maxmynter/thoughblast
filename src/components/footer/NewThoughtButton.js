@@ -11,7 +11,7 @@ const NewThoughtButton = (props) => {
   return (
     <View
       style={{
-        backgroundColor: props.isOnPage ? theme.colors.uiGrey : null,
+        backgroundColor: props.isOnPage ? theme.colorPalette[300] : null,
         borderRadius: 16,
       }}
     >

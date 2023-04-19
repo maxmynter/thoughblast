@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     flexDirection: "row",
-    backgroundColor: theme.colors.uiGrey,
+    backgroundColor: theme.colorPalette[500],
     justifyContent: "space-between",
     alignItems: "center",
     borderRadius: 8,

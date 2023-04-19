@@ -4,10 +4,10 @@ import NewThoughtButton from "./NewThoughtButton";
 import { theme } from "../../Styles/theme";
 import GoToPageButton from "./GoToPageButton";
 import footerText from "../../Styles/footerText";
-import { useDispatch } from "react-redux";
+
 const styles = StyleSheet.create({
   footerBackgroundView: {
-    backgroundColor: theme.colors.uiBlack,
+    backgroundColor: theme.colorPalette[950],
     display: "flex",
     justifyContent: "center",
     flexDirection: "row",
@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
 });
 
 const Footer = ({ display, onCreateThought }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   return (

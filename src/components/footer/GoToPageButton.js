@@ -7,10 +7,10 @@ const GoToPageButton = (props) => {
     buttonAnimationWrapperContainerWithEdges: {
       borderLeftWidth: props.leftBorder ? 1 : 0,
       borderRightWidth: props.rightBorder ? 1 : 0,
-      borderColor: theme.colors.uiWhite,
+      borderColor: theme.colorPalette[100],
     },
     backgroundContainerView: {
-      backgroundColor: props.isOnPage ? theme.colors.uiGrey : null,
+      backgroundColor: props.isOnPage ? theme.colorPalette[300] : null,
       borderRadius: 16,
     },
   });

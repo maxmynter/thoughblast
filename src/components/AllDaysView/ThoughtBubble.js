@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import thoughtViewContainer from "../../Styles/thoughtViewContainer";
+import { theme } from "../../Styles/theme";
 
 const styles = StyleSheet.create({
   thoughtViewContainer: {
@@ -18,6 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     flexDirection: "row",
     flexWrap: "wrap",
+    color: theme.colorPalette[950],
   },
   tagContainer: {
     display: "flex",
