@@ -25,6 +25,16 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   footerText: { ...footerText },
+  goToPageButtonContainerView: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  goToPageButtonExplainerText: {
+    color: theme.colorPalette[50],
+    fontWeight: "bold",
+    fontSize: 11,
+  },
 });
 
 const Footer = ({ display, onCreateThought }) => {
@@ -40,7 +50,10 @@ const Footer = ({ display, onCreateThought }) => {
               rightBorder={true}
               onClick={() => navigate("/hotThoughts")}
             >
-              <Text style={styles.footerText}>📌</Text>
+              <View style={styles.goToPageButtonContainerView}>
+                <Text style={styles.footerText}>📌</Text>
+                <Text style={styles.goToPageButtonExplainerText}>{"Pins"}</Text>
+              </View>
             </GoToPageButton>
             <NewThoughtButton
               isOnPage={location.pathname === "/"}
@@ -54,7 +67,10 @@ const Footer = ({ display, onCreateThought }) => {
               leftBorder={true}
               onClick={() => navigate("/customizeTags")}
             >
-              <Text style={styles.footerText}>🏷️</Text>
+              <View style={styles.goToPageButtonContainerView}>
+                <Text style={styles.footerText}>🏷️</Text>
+                <Text style={styles.goToPageButtonExplainerText}>{"Tags"}</Text>
+              </View>
             </GoToPageButton>
           </View>
         </View>

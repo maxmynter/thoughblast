@@ -5,12 +5,10 @@ import { theme } from "../../Styles/theme";
 const GoToPageButton = (props) => {
   const styles = StyleSheet.create({
     buttonAnimationWrapperContainerWithEdges: {
-      borderLeftWidth: props.leftBorder ? 1 : 0,
-      borderRightWidth: props.rightBorder ? 1 : 0,
       borderColor: theme.colorPalette[100],
     },
     backgroundContainerView: {
-      backgroundColor: props.isOnPage ? theme.colorPalette[300] : null,
+      backgroundColor: props.isOnPage ? theme.colorPalette[500] : null,
       borderRadius: 16,
     },
   });

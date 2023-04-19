@@ -4,19 +4,35 @@ import footerText from "../../Styles/footerText";
 import { theme } from "../../Styles/theme";
 
 const styles = StyleSheet.create({
+  newThoughtButtonContainerView: {
+    borderRadius: 16,
+  },
+  newThoughtButtonTextContainerView: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
   NewThoughtButtonText: { ...footerText },
+  newThoughtButtonExplainerText: {
+    color: theme.colorPalette[50],
+    fontWeight: "bold",
+    fontSize: 11,
+  },
 });
 
 const NewThoughtButton = (props) => {
   return (
     <View
       style={{
-        backgroundColor: props.isOnPage ? theme.colorPalette[300] : null,
-        borderRadius: 16,
+        ...styles.newThoughtButtonContainerView,
+        backgroundColor: props.isOnPage ? theme.colorPalette[500] : null,
       }}
     >
       <ButtonAnimationWrapper onClick={props.onClick}>
-        <Text style={styles.NewThoughtButtonText}>💭</Text>
+        <View style={styles.newThoughtButtonTextContainerView}>
+          <Text style={styles.NewThoughtButtonText}>💭</Text>
+          <Text style={styles.newThoughtButtonExplainerText}>{"Enter"}</Text>
+        </View>
       </ButtonAnimationWrapper>
     </View>
   );
