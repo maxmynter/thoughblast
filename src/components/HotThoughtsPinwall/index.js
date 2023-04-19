@@ -2,8 +2,9 @@ import Constants from "expo-constants";
 import { View, StyleSheet, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 import { theme } from "../../Styles/theme";
-import ThoughtBubble from "../AllDaysView/ThoughtBubble";
 import Header from "../Header";
+import PinnwallItem from "./PinnwallItem";
+import { useState } from "react";
 
 const styles = StyleSheet.create({
   hotThoughtsContainer: {
@@ -20,14 +21,25 @@ const styles = StyleSheet.create({
 });
 
 const HotThoughtsPinwall = () => {
-  const data = useSelector((state) => state.thoughtReducer);
+  const allThoughts = useSelector((state) => state.thoughtReducer);
+  const [data, setData] = useState(
+    allThoughts.filter((thought) => thought.pinned === true)
+  );
+
   return (
     <View style={styles.hotThoughtsContainer}>
       <Header text="Pinned Thoughts" />
       <FlatList
-        data={data.filter((thought) => thought.pinnedAtDate)}
+        data={data}
         renderItem={({ item }) => {
-          return <ThoughtBubble key={item.id} item={item} />;
+          return (
+            <PinnwallItem
+              item={item}
+              unPinItem={() =>
+                setData(data.filter((thought) => thought.id !== item.id))
+              }
+            />
+          );
         }}
         ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
       />

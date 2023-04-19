@@ -5,6 +5,14 @@ const pinThought = (id) => {
   };
 };
 
+const unPinThought = (id) => {
+  console.log("unpin", id);
+  return {
+    type: "UNPIN_THOUGHT",
+    payload: { id },
+  };
+};
+
 const addThought = ({ thought }) => {
   return {
     type: "ADD_THOUGHT",
@@ -18,4 +26,4 @@ const resetThoughts = () => {
   };
 };
 
-export { resetThoughts, pinThought, addThought };
+export { unPinThought, resetThoughts, pinThought, addThought };

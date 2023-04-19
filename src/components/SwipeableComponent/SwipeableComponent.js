@@ -13,7 +13,9 @@ const SwipeableComponent = (props) => {
     }
   };
   const closeSwipeable = () => {
-    swipeableRef.current.close();
+    if (swipeableRef.current) {
+      swipeableRef.current.close();
+    }
   };
 
   return (

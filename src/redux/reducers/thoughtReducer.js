@@ -6,28 +6,32 @@ const MOCK_THOUGHTS = [
     text: "Hey buildspace, hey twitter, this is what I'm building for N&W S3. If you are reading this, you spend a lot of attention. Great. Tweet @ me, or slide in my DMs to get access and shape the development of the app. I would really appreciate that. ",
     tag: "🔥",
     createdAt: new Date("2022-01-01").toISOString(),
-    pinnedAtDate: null,
+    pinnedAtDate: [],
+    pinned: false,
     id: 1,
   },
   {
     text: "HEUREKAAA",
     tag: "💡",
     createdAt: new Date("2023-01-01").toISOString(),
-    pinnedAtDate: null,
+    pinnedAtDate: [],
+    pinned: false,
     id: 2,
   },
   {
     text: "Coding, all day... Keepin the commit history green. Life is good.",
     tag: "🔥",
     createdAt: new Date().toISOString(),
-    pinnedAtDate: null,
+    pinnedAtDate: [],
+    pinned: false,
     id: 3,
   },
   {
     text: "Make the design better. 4 real. ",
     tag: "💡",
     createdAt: new Date().toISOString(),
-    pinnedAtDate: null,
+    pinnedAtDate: [],
+    pinned: false,
     id: 4,
   },
 ];
@@ -40,7 +44,18 @@ const thoughtReducer = (state = initialState, action) => {
       console.log("pinning", action.payload.id);
       return state.map((thought) =>
         thought.id === action.payload.id
-          ? { ...thought, pinnedAtDate: new Date().toISOString() }
+          ? {
+              ...thought,
+              pinned: true,
+              pinnedAtDate: [...thought.pinnedAtDate, new Date().toISOString()],
+            }
+          : thought
+      );
+    }
+    case "UNPIN_THOUGHt": {
+      return state.map((thought) =>
+        thought.id === action.payload.id
+          ? { ...thought, pinned: false }
           : thought
       );
     }
