@@ -43,6 +43,12 @@ const styles = StyleSheet.create({
     top: 0,
   },
   errorText: { color: theme.colors.uiError, marginBottom: 8 },
+  emojiSelectorViewContainer: {
+    backgroundColor: theme.colorPalette[50],
+    position: "absolute",
+    top: "70%",
+    maxHeight: Dimensions.get("window").height,
+  },
 });
 
 const AddTagFlow = () => {
@@ -56,6 +62,8 @@ const AddTagFlow = () => {
     console.log("Clicked Outside");
     setAddingTagInProgress(false);
     setShowError(false);
+    setSelectTag(false);
+    setNewTagDescription("");
   };
 
   if (addingTagInProgress) {
@@ -107,10 +115,14 @@ const AddTagFlow = () => {
             <TouchableWithoutFeedback onPress={onClickOutside}>
               <View style={styles.invisibleContainerToDetectClickOutside} />
             </TouchableWithoutFeedback>
+
             <EmojiSelector
               onEmojiSelected={(emoji) => {
                 dispatch(
-                  addTag({ symbol: emoji, description: newTagDescription })
+                  addTag({
+                    symbol: emoji,
+                    description: newTagDescription,
+                  })
                 );
                 setSelectTag(false);
                 setAddingTagInProgress(false);
