@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     backgroundColor: theme.colorPalette[500],
+    color: theme.colorPalette[100],
     justifyContent: "space-between",
     alignItems: "center",
     borderRadius: 8,
@@ -54,7 +55,7 @@ const DayItem = ({ item }) => {
       }}
       overshootLeft={false}
       friction={2.5}
-      rightThreshold={0.2}
+      rightThreshold={55}
     >
       <ThoughtBubble item={item} />
     </Swipeable>
