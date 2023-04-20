@@ -4,6 +4,7 @@ import { pinThought } from "../../redux/actions/thoughtActions";
 import SwipeableComponent from "../SwipeableComponent/SwipeableComponent";
 import ThoughtBubble from "./ThoughtBubble";
 import revealOnRightSwipeWrapperView from "../../Styles/revealOnRightSwipeWrapperView";
+import { toggle_create_thought_update } from "../../redux/actions/newThoughtCreationActions";
 
 const styles = StyleSheet.create({
   rightSwipeWrapperView: { ...revealOnRightSwipeWrapperView },
@@ -32,6 +33,7 @@ const DayItem = ({ item }) => {
   return (
     <Pressable
       onLongPress={() => {
+        dispatch(toggle_create_thought_update(item));
         console.log("Long Press");
       }}
       onPress={() => {

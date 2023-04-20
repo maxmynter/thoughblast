@@ -1,6 +1,7 @@
 const toggle_create_thought_update = (item) => {
+  console.log(item);
   return {
-    type: "THOUGHT_CREATION_TRUE",
+    type: "THOUGHT_UPDATE",
     payload: item,
   };
 };
