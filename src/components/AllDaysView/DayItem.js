@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable, Linking } from "react-native";
 import { useDispatch } from "react-redux";
 import { pinThought } from "../../redux/actions/thoughtActions";
 import SwipeableComponent from "../SwipeableComponent/SwipeableComponent";
@@ -30,12 +30,22 @@ const DayItem = ({ item }) => {
   };
 
   return (
-    <SwipeableComponent
-      RightSwipeRevealComponents={RightSwipeRevealComponents}
-      rightSwipeActions={rightSwipeActions}
+    <Pressable
+      onPress={() => {
+        console.log("pressed", item.id);
+        // on press on the component asking for feedback (id === 1 ) open feedback mail.
+        if (item.id === 1) {
+          Linking.openURL("mailto:maxmynter@.com");
+        }
+      }}
     >
-      <ThoughtBubble item={item} />
-    </SwipeableComponent>
+      <SwipeableComponent
+        RightSwipeRevealComponents={RightSwipeRevealComponents}
+        rightSwipeActions={rightSwipeActions}
+      >
+        <ThoughtBubble item={item} />
+      </SwipeableComponent>
+    </Pressable>
   );
 };
 

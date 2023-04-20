@@ -88,7 +88,7 @@ const thoughtReducer = (state = initialState, action) => {
       ];
     }
     case "RESET":
-      return MOCK_THOUGHTS;
+      return state;
     default: {
       return state;
     }
