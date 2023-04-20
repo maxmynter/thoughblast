@@ -31,6 +31,9 @@ const DayItem = ({ item }) => {
 
   return (
     <Pressable
+      onLongPress={() => {
+        console.log("Long Press");
+      }}
       onPress={() => {
         console.log("pressed", item.id);
         // on press on the component asking for feedback (id === 1 ) open feedback mail.

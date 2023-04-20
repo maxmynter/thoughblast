@@ -13,8 +13,9 @@ import TagSelector from "./TagSelector";
 import thoughtViewContainer from "../../Styles/thoughtViewContainer";
 import { theme } from "../../Styles/theme";
 import { useDispatch, useSelector } from "react-redux";
-import { addThought } from "../../redux/actions/thoughtActions";
+import { addThought, updateThought } from "../../redux/actions/thoughtActions";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
+import { toggle_create_thought_false } from "../../redux/actions/newThoughtCreationActions";
 
 const styles = StyleSheet.create({
   keyboardAvoidingView: {
@@ -61,28 +62,43 @@ const styles = StyleSheet.create({
   },
 });
 
-function NewThoughtCreation({
+/*
+{
   setNewThoughtCreationInProgress,
   newThoughtCreationInProgress,
-}) {
+}
+*/
+
+function NewThoughtCreation() {
   const tags = useSelector((state) => state.tagReducer);
-  const [thought, setThought] = useState(null);
+  const { newThoughtCreationInProgress, ...item } = useSelector(
+    (state) => state.thoughtCreationReducer
+  );
+  const [thought, setThought] = useState(item ? item.text : null);
   const dispatch = useDispatch();
 
   const submitThought = (tag) => {
-    console.log("thought");
-    dispatch(
-      addThought({
-        thought: { tag: tag.symbol, text: thought },
-      })
-    );
-    setNewThoughtCreationInProgress(false);
+    if (item.id) {
+      console.log("In update Thought");
+      dispatch(
+        updateThought({
+          thought: { ...item, tag: tag.symbol, text: thought },
+        })
+      );
+    } else {
+      dispatch(
+        addThought({
+          thought: { tag: tag.symbol, text: thought },
+        })
+      );
+    }
+    dispatch(toggle_create_thought_false());
     setThought(null);
   };
 
   const onClickOutside = () => {
     console.log("Clicked Outside");
-    setNewThoughtCreationInProgress(false);
+    dispatch(toggle_create_thought_false());
   };
 
   return (
@@ -103,6 +119,7 @@ function NewThoughtCreation({
                   multiline={true}
                   style={styles.textInputStyle}
                   autoFocus={true}
+                  value={thought}
                   onChangeText={(newText) => setThought(newText)}
                 />
               </View>
