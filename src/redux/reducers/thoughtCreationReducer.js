@@ -16,7 +16,7 @@ const thoughtCreationReducer = (
     case "THOUGHT_UPDATE": {
       return {
         newThoughtCreationInProgress: true,
-        item: actions.payload.item,
+        item: actions.payload,
       };
     }
     default: {

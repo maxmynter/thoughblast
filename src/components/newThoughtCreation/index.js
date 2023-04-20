@@ -62,24 +62,17 @@ const styles = StyleSheet.create({
   },
 });
 
-/*
-{
-  setNewThoughtCreationInProgress,
-  newThoughtCreationInProgress,
-}
-*/
-
 function NewThoughtCreation() {
   const tags = useSelector((state) => state.tagReducer);
-  const { newThoughtCreationInProgress, ...item } = useSelector(
+  const { newThoughtCreationInProgress, ...rest } = useSelector(
     (state) => state.thoughtCreationReducer
   );
-  const [thought, setThought] = useState(item ? item.text : null);
+  const item = rest.item;
+  const [thought, setThought] = useState(null);
   const dispatch = useDispatch();
 
   const submitThought = (tag) => {
-    if (item.id) {
-      console.log("In update Thought");
+    if (item) {
       dispatch(
         updateThought({
           thought: { ...item, tag: tag.symbol, text: thought },
@@ -97,7 +90,7 @@ function NewThoughtCreation() {
   };
 
   const onClickOutside = () => {
-    console.log("Clicked Outside");
+    setThought(null);
     dispatch(toggle_create_thought_false());
   };
 
@@ -120,6 +113,7 @@ function NewThoughtCreation() {
                   style={styles.textInputStyle}
                   autoFocus={true}
                   value={thought}
+                  defaultValue={item ? item.text : null}
                   onChangeText={(newText) => setThought(newText)}
                 />
               </View>
