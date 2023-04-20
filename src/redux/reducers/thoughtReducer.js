@@ -69,7 +69,7 @@ const thoughtReducer = (state = initialState, action) => {
           : thought
       );
     }
-    case "UNPIN_THOUGHt": {
+    case "UNPIN_THOUGHT": {
       return state.map((thought) =>
         thought.id === action.payload.id
           ? { ...thought, pinned: false }
