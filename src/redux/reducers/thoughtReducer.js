@@ -81,7 +81,7 @@ const thoughtReducer = (state = initialState, action) => {
         {
           id: uuidv4(),
           createdAt: new Date().toISOString(),
-          pinnedAtDate: null,
+          pinnedAtDate: [],
           ...action.payload,
         },
         ...state,
