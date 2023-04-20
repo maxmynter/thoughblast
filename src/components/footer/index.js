@@ -4,6 +4,8 @@ import NewThoughtButton from "./NewThoughtButton";
 import { theme } from "../../Styles/theme";
 import GoToPageButton from "./GoToPageButton";
 import footerText from "../../Styles/footerText";
+import { useDispatch } from "react-redux";
+import { toggle_create_thought_true } from "../../redux/actions/newThoughtCreationActions";
 
 const styles = StyleSheet.create({
   footerBackgroundView: {
@@ -37,9 +39,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const Footer = ({ display, onCreateThought }) => {
+const Footer = ({ display }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   return (
     <>
       {display && (
@@ -59,7 +62,7 @@ const Footer = ({ display, onCreateThought }) => {
               isOnPage={location.pathname === "/"}
               onClick={() => {
                 navigate("/");
-                onCreateThought();
+                dispatch(toggle_create_thought_true());
               }}
             />
             <GoToPageButton

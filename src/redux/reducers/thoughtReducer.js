@@ -87,6 +87,20 @@ const thoughtReducer = (state = initialState, action) => {
         ...state,
       ];
     }
+    case "UPDATE_THOUGHT": {
+      return state.map((thought) =>
+        thought.id === action.payload.id
+          ? {
+              ...thought,
+              text: action.payload.text,
+              tag: action.payload.tag,
+              updatedAt: action.payload.updatedAt
+                ? [...action.payload.updatedAt, new Date().toISOString()]
+                : [new Date().toISOString()],
+            }
+          : thought
+      );
+    }
     case "RESET":
       return state;
     default: {

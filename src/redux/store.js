@@ -12,11 +12,17 @@ import {
 } from "redux-persist";
 import thoughtReducer from "./reducers/thoughtReducer";
 import tagReducer from "./reducers/tagReducer";
+import thoughtCreationReducer from "./reducers/thoughtCreationReducer";
 
-const rootReducer = combineReducers({ thoughtReducer, tagReducer });
+const rootReducer = combineReducers({
+  thoughtReducer,
+  tagReducer,
+  thoughtCreationReducer,
+});
 
 const persistConfig = {
   key: "root",
+  blacklist: ["thoughtCreationReducer"],
   storage: AsyncStorage,
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);

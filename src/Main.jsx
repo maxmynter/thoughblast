@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Route, Routes, Navigate } from "react-router-native";
 import AllDaysView from "./components/AllDaysView";
@@ -7,14 +6,16 @@ import { theme } from "./Styles/theme";
 import HotThoughtsPinwall from "./components/HotThoughtsPinwall";
 import CustomizeTagsPage from "./components/CustomizeTagsPage";
 import Footer from "./components/Footer";
+import { useSelector } from "react-redux";
 
 const styles = StyleSheet.create({
   appContainer: { backgroundColor: theme.colors.uiWhite, flex: 1 },
 });
 
 const Main = () => {
-  const [newThoughtCreationInProgress, setNewThoughtCreationInProgress] =
-    useState(true);
+  const { newThoughtCreationInProgress } = useSelector(
+    (state) => state.thoughtCreationReducer
+  );
 
   return (
     <View style={styles.appContainer}>
@@ -24,14 +25,8 @@ const Main = () => {
         <Route path="/hotThoughts" element={<HotThoughtsPinwall />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <NewThoughtCreation
-        newThoughtCreationInProgress={newThoughtCreationInProgress}
-        setNewThoughtCreationInProgress={setNewThoughtCreationInProgress}
-      />
-      <Footer
-        display={!newThoughtCreationInProgress}
-        onCreateThought={() => setNewThoughtCreationInProgress(true)}
-      />
+      <NewThoughtCreation />
+      <Footer display={!newThoughtCreationInProgress} />
     </View>
   );
 };

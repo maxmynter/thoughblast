@@ -26,4 +26,11 @@ const resetThoughts = () => {
   };
 };
 
-export { unPinThought, resetThoughts, pinThought, addThought };
+const updateThought = ({ thought }) => {
+  return {
+    type: "UPDATE_THOUGHT",
+    payload: thought,
+  };
+};
+
+export { unPinThought, resetThoughts, pinThought, addThought, updateThought };
