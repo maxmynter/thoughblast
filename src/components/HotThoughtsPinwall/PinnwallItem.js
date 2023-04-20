@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const PinnwallItem = ({ item, unPinItem }) => {
+const PinnwallItem = ({ item }) => {
   const dispatch = useDispatch();
 
   const RightSwipeRevealComponents = () => {
@@ -30,7 +30,6 @@ const PinnwallItem = ({ item, unPinItem }) => {
   };
 
   const rightSwipeActions = () => {
-    unPinItem();
     return dispatch(unPinThought(item.id));
   };
   return (

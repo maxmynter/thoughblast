@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { theme } from "../../Styles/theme";
 import Header from "../Header";
 import PinnwallItem from "./PinnwallItem";
-import { useState } from "react";
 
 const styles = StyleSheet.create({
   hotThoughtsContainer: {
@@ -21,25 +20,18 @@ const styles = StyleSheet.create({
 });
 
 const HotThoughtsPinwall = () => {
-  const allThoughts = useSelector((state) => state.thoughtReducer);
-  const [data, setData] = useState(
-    allThoughts.filter((thought) => thought.pinned === true)
+  const data = useSelector((state) => state.thoughtReducer).filter(
+    (thought) => thought.pinned === true
   );
 
   return (
     <View style={styles.hotThoughtsContainer}>
       <Header text="Pinned Thoughts" />
+      {console.log("State", data)}
       <FlatList
         data={data}
         renderItem={({ item }) => {
-          return (
-            <PinnwallItem
-              item={item}
-              unPinItem={() =>
-                setData(data.filter((thought) => thought.id !== item.id))
-              }
-            />
-          );
+          return <PinnwallItem item={item} />;
         }}
         ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
       />
