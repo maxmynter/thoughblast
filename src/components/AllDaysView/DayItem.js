@@ -35,7 +35,7 @@ const DayItem = ({ item }) => {
         console.log("pressed", item.id);
         // on press on the component asking for feedback (id === 1 ) open feedback mail.
         if (item.id === 1) {
-          Linking.openURL("mailto:maxmynter@.com");
+          Linking.openURL("mailto:thoughtblast4buildspace@gmail.com");
         }
       }}
     >
