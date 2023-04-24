@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   Platform,
+  Alert,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
@@ -106,14 +107,29 @@ function NewThoughtCreation() {
   };
 
   const onPressDelete = () => {
-    console.log("DELETE", item);
-    dispatch(
-      updateThought({
-        thought: { ...item, status: "deleted" },
-      })
+    Alert.alert(
+      "Delete Thought",
+      "Are you sure you want to delete the thought?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: () => {
+            dispatch(toggle_create_thought_false());
+            dispatch(
+              updateThought({
+                thought: { ...item, status: "deleted" },
+              })
+            );
+            setThought(null);
+          },
+        },
+      ]
     );
-    setThought(null);
-    dispatch(toggle_create_thought_false());
   };
 
   return (
