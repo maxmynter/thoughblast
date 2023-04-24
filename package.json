@@ -6,6 +6,8 @@
     "start": "expo start",
     "tunnel": "expo start --tunnel",
     "android": "expo start --android",
+    "build-ios": "eas build --platform ios",
+    "submit-build-ios": "eas submit --platform ios ",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "eslint ./src/**/*.{js,jsx} App.js --no-error-on-unmatched-pattern"

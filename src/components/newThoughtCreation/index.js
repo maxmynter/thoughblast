@@ -2,6 +2,7 @@ import Constants from "expo-constants";
 import {
   View,
   TextInput,
+  Text,
   StyleSheet,
   Dimensions,
   Platform,
@@ -64,10 +65,9 @@ const styles = StyleSheet.create({
 
 function NewThoughtCreation() {
   const tags = useSelector((state) => state.tagReducer);
-  const { newThoughtCreationInProgress, ...rest } = useSelector(
+  const { thoughtInteraction, item } = useSelector(
     (state) => state.thoughtCreationReducer
   );
-  const item = rest.item;
   const [thought, setThought] = useState(null);
   const dispatch = useDispatch();
 
@@ -90,13 +90,24 @@ function NewThoughtCreation() {
   };
 
   const onClickOutside = () => {
-    setThought(null);
-    dispatch(toggle_create_thought_false());
+    if (thoughtInteraction == "create") {
+      dispatch(toggle_create_thought_false());
+    }
+    if (thoughtInteraction == "edit") {
+      // on click outside when thought edited, changes the thought
+      dispatch(
+        updateThought({
+          thought: { ...item, text: thought },
+        })
+      );
+      setThought(null);
+      dispatch(toggle_create_thought_false());
+    }
   };
 
   return (
     <>
-      {newThoughtCreationInProgress && (
+      {thoughtInteraction && (
         <>
           <TouchableWithoutFeedback onPress={onClickOutside}>
             <View style={styles.invisibleContainerToDetectClickOutside}></View>
