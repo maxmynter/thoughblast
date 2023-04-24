@@ -5,17 +5,17 @@ const thoughtCreationReducer = (
   switch (actions.type) {
     case "THOUGHT_CREATION_FALSE": {
       return {
-        newThoughtCreationInProgress: false,
+        thoughtInteraction: false,
       };
     }
     case "THOUGHT_CREATION_TRUE": {
       return {
-        newThoughtCreationInProgress: true,
+        thoughtInteraction: "create",
       };
     }
     case "THOUGHT_UPDATE": {
       return {
-        newThoughtCreationInProgress: true,
+        thoughtInteraction: "edit",
         item: actions.payload,
       };
     }
