@@ -92,8 +92,7 @@ const thoughtReducer = (state = initialState, action) => {
         thought.id === action.payload.id
           ? {
               ...thought,
-              text: action.payload.text,
-              tag: action.payload.tag,
+              ...action.payload,
               updatedAt: action.payload.updatedAt
                 ? [...action.payload.updatedAt, new Date().toISOString()]
                 : [new Date().toISOString()],

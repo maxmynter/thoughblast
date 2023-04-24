@@ -2,7 +2,6 @@ import Constants from "expo-constants";
 import {
   View,
   TextInput,
-  Text,
   StyleSheet,
   Dimensions,
   Platform,
@@ -17,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addThought, updateThought } from "../../redux/actions/thoughtActions";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
 import { toggle_create_thought_false } from "../../redux/actions/newThoughtCreationActions";
+import DeleteThoughtButton from "./DeleteThoughtButton";
 
 const styles = StyleSheet.create({
   keyboardAvoidingView: {
@@ -105,6 +105,17 @@ function NewThoughtCreation() {
     }
   };
 
+  const onPressDelete = () => {
+    console.log("DELETE", item);
+    dispatch(
+      updateThought({
+        thought: { ...item, status: "deleted" },
+      })
+    );
+    setThought(null);
+    dispatch(toggle_create_thought_false());
+  };
+
   return (
     <>
       {thoughtInteraction && (
@@ -116,6 +127,9 @@ function NewThoughtCreation() {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.keyboardAvoidingView}
           >
+            {thoughtInteraction == "edit" && (
+              <DeleteThoughtButton onPress={onPressDelete} />
+            )}
             <View style={styles.newThoughtViewContainer}>
               <View style={styles.newThoughtTextInputView}>
                 <TextInput

@@ -93,7 +93,9 @@ const AllDaysView = () => {
         ref={sectionListRef}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
-          return <DayItem item={item} />;
+          if (item.status !== "deleted") {
+            return <DayItem item={item} />;
+          }
         }}
         renderSectionHeader={({ section: { title } }) => {
           const dateOptions = {

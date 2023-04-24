@@ -31,7 +31,9 @@ const HotThoughtsPinwall = () => {
       <FlatList
         data={data}
         renderItem={({ item }) => {
-          return <PinnwallItem item={item} />;
+          if (item.status !== "deleted") {
+            return <PinnwallItem item={item} />;
+          }
         }}
         ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
       />
