@@ -90,7 +90,7 @@ const AllDaysView = () => {
       <SectionList
         sections={data}
         contentContainerStyle={styles.SectionListContentContainer}
-        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         ref={sectionListRef}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {

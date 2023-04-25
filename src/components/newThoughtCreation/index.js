@@ -1,7 +1,6 @@
 import Constants from "expo-constants";
 import {
   View,
-  Text,
   TextInput,
   StyleSheet,
   Dimensions,
@@ -164,6 +163,7 @@ function NewThoughtCreation() {
                 data={tags}
                 keyboardShouldPersistTaps={"handled"}
                 horizontal={true}
+                showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
                   <TagSelector
                     key={item.id}
