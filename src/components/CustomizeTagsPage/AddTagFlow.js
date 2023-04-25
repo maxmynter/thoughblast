@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import EmojiSelector from "react-native-emoji-selector";
 import { theme } from "../../Styles/theme";
 import thoughtViewContainer from "../../Styles/thoughtViewContainer";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
@@ -69,69 +68,69 @@ const AddTagFlow = () => {
   if (addingTagInProgress) {
     return (
       <>
-        {!selectTag ? (
-          <>
-            <TouchableWithoutFeedback onPress={onClickOutside}>
-              <View style={styles.invisibleContainerToDetectClickOutside} />
-            </TouchableWithoutFeedback>
-            <KeyboardAvoidingView
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-              style={styles.keyboardAvoidingView}
-              keyboardVerticalOffset={Platform.OS === "ios" ? 58 : 0}
-            >
-              {showError && (
-                <Text style={styles.errorText}>
-                  Description should not be Empty
-                </Text>
-              )}
+        <>
+          <TouchableWithoutFeedback onPress={onClickOutside}>
+            <View style={styles.invisibleContainerToDetectClickOutside} />
+          </TouchableWithoutFeedback>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.keyboardAvoidingView}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 58 : 0}
+          >
+            {showError && (
+              <Text style={styles.errorText}>
+                Description should not be Empty
+              </Text>
+            )}
+            {!selectTag ? (
+              <>
+                <TextInput
+                  autoFocus={true}
+                  placeholderTextColor={theme.colors.uiWhite}
+                  placeholder="Tag Description"
+                  style={styles.tagDescriptionInputStyle}
+                  multiline={true}
+                  onChangeText={(newText) => {
+                    setNewTagDescription(newText);
+                  }}
+                />
+                <Pressable
+                  onPress={() => {
+                    if (newTagDescription.length === 0) {
+                      setShowError(true);
+                    } else {
+                      console.log("Tag Symbol");
+                      setSelectTag(true);
+                    }
+                  }}
+                >
+                  <View style={styles.buttonContainer}>
+                    <Text style={styles.buttonText}>{"Select Tag Symbol"}</Text>
+                  </View>
+                </Pressable>
+              </>
+            ) : (
               <TextInput
+                autoFocus={true}
                 placeholderTextColor={theme.colors.uiWhite}
-                placeholder="Tag Description"
+                placeholder="Select Single Emoji as Tag Symbol"
                 style={styles.tagDescriptionInputStyle}
-                multiline={true}
-                onChangeText={(newText) => {
-                  setNewTagDescription(newText);
+                onChangeText={(emoji) => {
+                  console.log(emoji);
+                  dispatch(
+                    addTag({
+                      symbol: emoji,
+                      description: newTagDescription,
+                    })
+                  );
+                  setSelectTag(false);
+                  setAddingTagInProgress(false);
+                  setNewTagDescription("");
                 }}
               />
-
-              <Pressable
-                onPress={() => {
-                  if (newTagDescription.length === 0) {
-                    setShowError(true);
-                  } else {
-                    console.log("Tag Symbol");
-                    setSelectTag(true);
-                  }
-                }}
-              >
-                <View style={styles.buttonContainer}>
-                  <Text style={styles.buttonText}>{"Select Tag Symbol"}</Text>
-                </View>
-              </Pressable>
-            </KeyboardAvoidingView>
-          </>
-        ) : (
-          <>
-            <TouchableWithoutFeedback onPress={onClickOutside}>
-              <View style={styles.invisibleContainerToDetectClickOutside} />
-            </TouchableWithoutFeedback>
-
-            <EmojiSelector
-              onEmojiSelected={(emoji) => {
-                dispatch(
-                  addTag({
-                    symbol: emoji,
-                    description: newTagDescription,
-                  })
-                );
-                setSelectTag(false);
-                setAddingTagInProgress(false);
-                setNewTagDescription("");
-              }}
-              showHistory={false}
-            />
-          </>
-        )}
+            )}
+          </KeyboardAvoidingView>
+        </>
       </>
     );
   } else {

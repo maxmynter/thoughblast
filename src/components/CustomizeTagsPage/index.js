@@ -37,7 +37,7 @@ const CustomizeTagsPage = () => {
         }}
         ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
       />
-      {tagData.length <= 6 && <AddTagFlow />}
+      <AddTagFlow />
     </View>
   );
 };
