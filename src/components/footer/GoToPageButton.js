@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import ButtonAnimationWrapper from "./ButtonAnimationWrapper";
+import ButtonAnimationWrapper from "../utils/ButtonAnimationWrapper";
 import { theme } from "../../Styles/theme";
 
 const GoToPageButton = (props) => {
