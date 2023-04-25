@@ -27,6 +27,7 @@ const CustomizeTagsPage = () => {
       <Header text={"Tags"} />
       <FlatList
         data={tagData}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => {
           return (
             <ThoughtBubble
