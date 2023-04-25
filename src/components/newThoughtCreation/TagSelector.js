@@ -1,7 +1,7 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { theme } from "../../Styles/theme";
 
-const minHeightAndLineHeight = 35;
+const minHeightAndLineHeight = 45;
 
 const styles = StyleSheet.create({
   tagSelectorTagViewWrapper: {
@@ -9,9 +9,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    minWidth: 75,
+    minWidth: 85,
     minHeight: minHeightAndLineHeight,
-    borderColor: theme.colorPalette[50],
+    borderRadius: 16,
+    marginLeft: 8,
+    backgroundColor: theme.colorPalette[950],
   },
   tagSelectorText: {
     flexGrow: 1,

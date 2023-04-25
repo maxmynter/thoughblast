@@ -13,12 +13,13 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
-  const { newThoughtCreationInProgress } = useSelector(
+  const { thoughtInteraction } = useSelector(
     (state) => state.thoughtCreationReducer
   );
 
   return (
     <View style={styles.appContainer}>
+      {console.log("thoughtInteraction", thoughtInteraction)}
       <Routes>
         <Route path="/" element={<AllDaysView />} />
         <Route path="/customizeTags" element={<CustomizeTagsPage />} />
@@ -26,7 +27,7 @@ const Main = () => {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <NewThoughtCreation />
-      <Footer display={!newThoughtCreationInProgress} />
+      <Footer display={!thoughtInteraction} />
     </View>
   );
 };
