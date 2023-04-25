@@ -1,11 +1,8 @@
 import { View, StyleSheet, Text } from "react-native";
 import { useNavigate, useLocation } from "react-router-dom";
-import NewThoughtButton from "./NewThoughtButton";
 import { theme } from "../../Styles/theme";
 import GoToPageButton from "./GoToPageButton";
 import footerText from "../../Styles/footerText";
-import { useDispatch } from "react-redux";
-import { toggle_create_thought_true } from "../../redux/actions/newThoughtCreationActions";
 
 const styles = StyleSheet.create({
   footerBackgroundView: {
@@ -43,7 +40,6 @@ const styles = StyleSheet.create({
 const Footer = ({ display }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch();
   return (
     <>
       {display && (
@@ -59,13 +55,18 @@ const Footer = ({ display }) => {
                 <Text style={styles.goToPageButtonExplainerText}>{"Pins"}</Text>
               </View>
             </GoToPageButton>
-            <NewThoughtButton
+            <GoToPageButton
               isOnPage={location.pathname === "/"}
-              onClick={() => {
-                navigate("/");
-                dispatch(toggle_create_thought_true());
-              }}
-            />
+              onClick={() => navigate("/")}
+            >
+              <View style={styles.goToPageButtonContainerView}>
+                <Text style={styles.footerText}>💭</Text>
+                <Text style={styles.goToPageButtonExplainerText}>
+                  {"Thoughts"}
+                </Text>
+              </View>
+            </GoToPageButton>
+
             <GoToPageButton
               isOnPage={location.pathname === "/customizeTags"}
               leftBorder={true}
