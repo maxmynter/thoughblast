@@ -1,6 +1,7 @@
 import Constants from "expo-constants";
 import {
   View,
+  Text,
   TextInput,
   StyleSheet,
   Dimensions,
@@ -12,46 +13,44 @@ import {
 import { useState } from "react";
 import TagSelector from "./TagSelector";
 import thoughtViewContainer from "../../Styles/thoughtViewContainer";
-import { theme } from "../../Styles/theme";
 import { useDispatch, useSelector } from "react-redux";
 import { addThought, updateThought } from "../../redux/actions/thoughtActions";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
 import { toggle_create_thought_false } from "../../redux/actions/newThoughtCreationActions";
 import DeleteThoughtButton from "./DeleteThoughtButton";
+import { theme } from "../../Styles/theme";
+import { FlatList } from "react-native-gesture-handler";
 
 const styles = StyleSheet.create({
   keyboardAvoidingView: {
     position: "absolute",
+    backgroundColor: theme.colorPalette[50],
     width: Dimensions.get("window").width,
     bottom: 16,
     flex: 1,
+    paddingTop: 4,
     maxHeight: Dimensions.get("window").height - Constants.statusBarHeight - 24,
+    ...elevatedShadowProps,
   },
   newThoughtViewContainer: {
     ...thoughtViewContainer,
-    marginLeft: 16,
-    marginRight: 16,
-    marginBottom: 16,
+    marginLeft: 8,
+    marginRight: 8,
+    marginBottom: 8,
     minHeight: 100,
     display: "flex",
     flexDirection: "row",
-    ...elevatedShadowProps,
   },
   newThoughtTextInputView: { flexShrink: 1 },
   textInputStyle: {},
   tagSelectorContainerView: {
-    backgroundColor: theme.colorPalette[950],
-    marginLeft: 16,
-    marginRight: 16,
     marginBottom: 16,
-    padding: 8,
-    borderRadius: 8,
+    paddingTop: 8,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     flexWrap: "wrap",
-    justifyContent: "space-around",
-    ...elevatedShadowProps,
+    justifyContent: "flex-start",
   },
   invisibleContainerToDetectClickOutside: {
     width: Dimensions.get("window").width,
@@ -73,6 +72,7 @@ function NewThoughtCreation() {
   const dispatch = useDispatch();
 
   const submitThought = (tag) => {
+    console.log("submitting", tag);
     if (item) {
       dispatch(
         updateThought({
@@ -159,15 +159,21 @@ function NewThoughtCreation() {
                 />
               </View>
             </View>
-
             <View style={styles.tagSelectorContainerView}>
-              {tags.map((tag) => (
-                <TagSelector
-                  key={tag.id}
-                  tag={tag.symbol}
-                  handleSubmit={() => submitThought(tag)}
-                />
-              ))}
+              <FlatList
+                data={tags}
+                keyboardShouldPersistTaps={"handled"}
+                horizontal={true}
+                renderItem={({ item }) => (
+                  <TagSelector
+                    key={item.id}
+                    tag={item.symbol}
+                    handleSubmit={() => {
+                      submitThought(item);
+                    }}
+                  />
+                )}
+              />
             </View>
           </KeyboardAvoidingView>
         </>
@@ -177,5 +183,3 @@ function NewThoughtCreation() {
 }
 
 export default NewThoughtCreation;
-//Persist text when making thought away
-//Add button to discard everything written and blast new thought

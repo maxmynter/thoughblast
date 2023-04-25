@@ -1,6 +1,5 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { theme } from "../../Styles/theme";
-import elevatedShadowProps from "../../Styles/elevatedShadowProps";
 
 const styles = StyleSheet.create({
   deleteButton: {
@@ -14,7 +13,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     padding: 8,
-    ...elevatedShadowProps,
   },
   deleteButtonText: {
     color: theme.colorPalette[50],
