@@ -60,6 +60,11 @@ const styles = StyleSheet.create({
     bottom: 0,
     top: 0,
   },
+  tagListContainerStyles: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 function NewThoughtCreation() {
@@ -68,6 +73,7 @@ function NewThoughtCreation() {
     (state) => state.thoughtCreationReducer
   );
   const [thought, setThought] = useState(null);
+  const [selectedTagID, setSelectedTagID] = useState(tags[0].id);
   const dispatch = useDispatch();
 
   const submitThought = (tag) => {
@@ -90,8 +96,16 @@ function NewThoughtCreation() {
   };
 
   const onClickOutside = () => {
-    if (thoughtInteraction == "create") {
+    if (
+      thoughtInteraction == "create" &&
+      (thought === null || thought === "")
+    ) {
+      //Dismiss thought, if thought was not edited
       dispatch(toggle_create_thought_false());
+    }
+    if (thoughtInteraction == "create" && thought !== null && thought !== "") {
+      //Submit thought on click outside
+      submitThought(tags.find((tag) => tag.id === selectedTagID));
     }
     if (thoughtInteraction == "edit") {
       // on click outside when thought edited, changes the thought
@@ -131,6 +145,14 @@ function NewThoughtCreation() {
     );
   };
 
+  const handlePressTag = (item) => {
+    if (item.id === selectedTagID) {
+      submitThought(item);
+    } else {
+      setSelectedTagID(item.id);
+    }
+  };
+
   return (
     <>
       {thoughtInteraction && (
@@ -163,14 +185,14 @@ function NewThoughtCreation() {
                 data={tags}
                 keyboardShouldPersistTaps={"handled"}
                 horizontal={true}
+                contentContainerStyle={styles.tagListContainerStyles}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
                   <TagSelector
                     key={item.id}
                     tag={item.symbol}
-                    handleSubmit={() => {
-                      submitThought(item);
-                    }}
+                    isSelected={item.id === selectedTagID}
+                    handlePress={() => handlePressTag(item)}
                   />
                 )}
               />
