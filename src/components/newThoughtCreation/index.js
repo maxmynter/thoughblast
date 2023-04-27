@@ -1,6 +1,7 @@
 import Constants from "expo-constants";
 import {
   View,
+  Text,
   TextInput,
   StyleSheet,
   Dimensions,
@@ -8,6 +9,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  Pressable,
 } from "react-native";
 import { useState } from "react";
 import TagSelector from "./TagSelector";
@@ -64,6 +66,25 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+  },
+  submitButton: {
+    backgroundColor: theme.colorPalette[950],
+    paddingLeft: 8,
+    paddingRight: 8,
+    marginBottom: 8,
+    marginLeft: 8,
+    marginRight: 8,
+    borderRadius: 8,
+    minHeight: 32,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  submitButtonText: {
+    color: theme.colorPalette[50],
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 16,
   },
 });
 
@@ -152,6 +173,13 @@ function NewThoughtCreation() {
     }
   };
 
+  const checkThoughtSubmittable = () => {
+    if (thought !== null && thought.length > 0) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <>
       {thoughtInteraction && (
@@ -197,6 +225,26 @@ function NewThoughtCreation() {
                 )}
               />
             </View>
+            <Pressable
+              onPress={() => {
+                if (checkThoughtSubmittable()) {
+                  submitThought(tags.find((tag) => tag.id === selectedTagID));
+                }
+              }}
+            >
+              <View
+                style={{
+                  ...styles.submitButton,
+                  backgroundColor: checkThoughtSubmittable()
+                    ? styles.submitButton.backgroundColor
+                    : theme.colorPalette[200],
+                }}
+              >
+                <Text style={styles.submitButtonText}>
+                  {thoughtInteraction == "create" ? "Blast" : "Save"}
+                </Text>
+              </View>
+            </Pressable>
           </KeyboardAvoidingView>
         </>
       )}
