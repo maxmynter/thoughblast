@@ -4,10 +4,10 @@ const tagCreationReducer = (state = { tagInteraction: false }, actions) => {
       return { tagInteraction: false };
     }
     case "TAG_INTERACTION_TRUE": {
-      return { tagInteraction: true };
+      return { tagInteraction: "create" };
     }
     case "TAG_UPDATE": {
-      return { tagInteraction: true, item: actions.payload };
+      return { tagInteraction: "edit", item: actions.payload };
     }
     default: {
       return state;

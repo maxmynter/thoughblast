@@ -5,7 +5,7 @@ const addTag = (tag) => {
   };
 };
 
-const removeTag = ({ id }) => {
+const removeTag = (id) => {
   return {
     type: "REMOVE_TAG",
     payload: id,

@@ -4,8 +4,8 @@ import { theme } from "../../Styles/theme";
 const styles = StyleSheet.create({
   deleteButton: {
     backgroundColor: theme.colors.uiError,
-    marginLeft: 16,
-    marginRight: 16,
+    marginLeft: 8,
+    marginRight: 8,
     marginBottom: 16,
     borderRadius: 8,
     minHeight: 16,

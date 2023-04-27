@@ -14,11 +14,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { theme } from "../../Styles/theme";
 import thoughtViewContainer from "../../Styles/thoughtViewContainer";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
-import { addTag } from "../../redux/actions/tagActions";
+import { addTag, removeTag } from "../../redux/actions/tagActions";
 import {
   toggle_create_tag_false,
   toggle_create_tag_true,
 } from "../../redux/actions/tagInteractionActions";
+import DeleteThoughtButton from "../utils/DeleteThoughtButton";
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   buttonText: { color: theme.colorPalette[100], fontWeight: 600 },
-  keyboardAvoidingView: {},
+  keyboardAvoidingView: { paddingTop: 4 },
   tagDescriptionInputStyle: {
     ...thoughtViewContainer,
     backgroundColor: theme.colorPalette[950],
@@ -55,18 +56,30 @@ const styles = StyleSheet.create({
 });
 
 const AddTagFlow = () => {
-  const { tagInteraction } = useSelector((state) => state.tagCreationReducer);
+  const { tagInteraction, item } = useSelector(
+    (state) => state.tagCreationReducer
+  );
   const [newTagDescription, setNewTagDescription] = useState("");
   const [selectTag, setSelectTag] = useState(false);
   const [showError, setShowError] = useState(false);
   const dispatch = useDispatch();
 
-  const onClickOutside = () => {
-    console.log("Clicked Outside");
+  const cleanup = () => {
     dispatch(toggle_create_tag_false());
     setShowError(false);
     setSelectTag(false);
     setNewTagDescription("");
+  };
+  const onClickOutside = () => {
+    console.log("Clicked Outside");
+    cleanup();
+  };
+
+  const onPressDelete = () => {
+    console.log("DELETE");
+    console.log("in delete", item.id);
+    dispatch(removeTag(item.id));
+    cleanup();
   };
 
   if (tagInteraction) {
@@ -86,12 +99,16 @@ const AddTagFlow = () => {
                 Description should not be Empty
               </Text>
             )}
+            {tagInteraction == "edit" && (
+              <DeleteThoughtButton onPress={onPressDelete} />
+            )}
             {!selectTag ? (
               <>
                 <TextInput
                   autoFocus={true}
                   placeholderTextColor={theme.colors.uiWhite}
                   placeholder="Tag Description"
+                  defaultValue={item ? item.description : null}
                   style={styles.tagDescriptionInputStyle}
                   multiline={true}
                   onChangeText={(newText) => {
@@ -117,7 +134,7 @@ const AddTagFlow = () => {
               <TextInput
                 autoFocus={true}
                 placeholderTextColor={theme.colors.uiWhite}
-                placeholder="Select Single Emoji as Tag Symbol"
+                placeholder="Select single Emoji or letter as Tag Identifier"
                 style={styles.tagDescriptionInputStyle}
                 onChangeText={(emoji) => {
                   dispatch(

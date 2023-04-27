@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addThought, updateThought } from "../../redux/actions/thoughtActions";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
 import { toggle_create_thought_false } from "../../redux/actions/newThoughtCreationActions";
-import DeleteThoughtButton from "./DeleteThoughtButton";
+import DeleteThoughtButton from "../utils/DeleteThoughtButton";
 import { theme } from "../../Styles/theme";
 import { FlatList } from "react-native-gesture-handler";
 
@@ -77,7 +77,6 @@ function NewThoughtCreation() {
   const dispatch = useDispatch();
 
   const submitThought = (tag) => {
-    console.log("submitting", tag);
     if (item) {
       dispatch(
         updateThought({
@@ -182,7 +181,8 @@ function NewThoughtCreation() {
             </View>
             <View style={styles.tagSelectorContainerView}>
               <FlatList
-                data={tags}
+                data={tags.filter((tag) => tag.status !== "deleted")}
+                autoFocus={true}
                 keyboardShouldPersistTaps={"handled"}
                 horizontal={true}
                 contentContainerStyle={styles.tagListContainerStyles}

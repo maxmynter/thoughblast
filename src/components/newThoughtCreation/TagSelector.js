@@ -19,6 +19,8 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     lineHeight: minHeightAndLineHeight,
+    color: theme.colorPalette[50],
+    fontWeight: "bold",
   },
 });
 
