@@ -3,8 +3,8 @@ import { View, StyleSheet, FlatList } from "react-native";
 import { theme } from "../../Styles/theme";
 import { useSelector } from "react-redux";
 import Header from "../Header";
-import ThoughtBubble from "../AllDaysView/ThoughtBubble";
 import AddTagFlow from "./AddTagFlow";
+import TagContainerItem from "./TagContainerItem";
 
 const styles = StyleSheet.create({
   customizeTagsPageContainer: {
@@ -29,12 +29,7 @@ const CustomizeTagsPage = () => {
         data={tagData}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => {
-          return (
-            <ThoughtBubble
-              key={item.id}
-              item={{ text: item.description, tag: item.symbol }}
-            />
-          );
+          return <TagContainerItem item={item} />;
         }}
         ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
       />
