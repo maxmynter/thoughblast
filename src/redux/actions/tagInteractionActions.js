@@ -11,7 +11,6 @@ const toggle_create_tag_false = () => {
 };
 
 const toggle_create_tag_update = (item) => {
-  console.log(item);
   return {
     type: "TAG_UPDATE",
     payload: item,

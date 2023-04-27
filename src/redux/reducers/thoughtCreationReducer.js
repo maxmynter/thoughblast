@@ -1,5 +1,5 @@
 const thoughtCreationReducer = (
-  state = { newThoughtCreationInProgress: false },
+  state = { thoughtInteraction: false },
   actions
 ) => {
   switch (actions.type) {

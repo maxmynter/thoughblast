@@ -26,7 +26,7 @@ const CustomizeTagsPage = () => {
     <View style={styles.customizeTagsPageContainer}>
       <Header text={"Tags"} />
       <FlatList
-        data={tagData}
+        data={tagData.filter((item) => item.status !== "deleted")}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => {
           return <TagContainerItem item={item} />;
