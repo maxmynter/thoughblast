@@ -9,6 +9,11 @@ const initialState = [{ symbol: "💡", description: "Idea", id: 33 }];
 
 const tagReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "UPDATE_TAG": {
+      return state.map((tag) =>
+        action.payload.id === tag.id ? { ...tag, ...action.payload } : tag
+      );
+    }
     case "ADD_TAG": {
       return [{ id: uuidv4(), ...action.payload }, ...state];
     }
