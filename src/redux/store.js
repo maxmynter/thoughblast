@@ -13,10 +13,12 @@ import {
 import thoughtReducer from "./reducers/thoughtReducer";
 import tagReducer from "./reducers/tagReducer";
 import thoughtCreationReducer from "./reducers/thoughtCreationReducer";
+import tagCreationReducer from "./reducers/tagCreationReducer";
 
 const rootReducer = combineReducers({
   thoughtReducer,
   tagReducer,
+  tagCreationReducer,
   thoughtCreationReducer,
 });
 

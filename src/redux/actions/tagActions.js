@@ -16,4 +16,8 @@ const resetTags = () => {
   return { type: "RESET" };
 };
 
-export { resetTags, addTag, removeTag };
+const updateTag = (updatedTagWithID) => {
+  return { type: "UPDATE_TAG", payload: updatedTagWithID };
+};
+
+export { resetTags, addTag, removeTag, updateTag };

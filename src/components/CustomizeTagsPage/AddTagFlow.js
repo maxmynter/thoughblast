@@ -10,11 +10,15 @@ import {
   Dimensions,
 } from "react-native";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { theme } from "../../Styles/theme";
 import thoughtViewContainer from "../../Styles/thoughtViewContainer";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
 import { addTag } from "../../redux/actions/tagActions";
+import {
+  toggle_create_tag_false,
+  toggle_create_tag_true,
+} from "../../redux/actions/tagInteractionActions";
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -51,7 +55,7 @@ const styles = StyleSheet.create({
 });
 
 const AddTagFlow = () => {
-  const [addingTagInProgress, setAddingTagInProgress] = useState(false);
+  const { tagInteraction } = useSelector((state) => state.tagCreationReducer);
   const [newTagDescription, setNewTagDescription] = useState("");
   const [selectTag, setSelectTag] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -59,13 +63,13 @@ const AddTagFlow = () => {
 
   const onClickOutside = () => {
     console.log("Clicked Outside");
-    setAddingTagInProgress(false);
+    dispatch(toggle_create_tag_false());
     setShowError(false);
     setSelectTag(false);
     setNewTagDescription("");
   };
 
-  if (addingTagInProgress) {
+  if (tagInteraction) {
     return (
       <>
         <>
@@ -116,7 +120,6 @@ const AddTagFlow = () => {
                 placeholder="Select Single Emoji as Tag Symbol"
                 style={styles.tagDescriptionInputStyle}
                 onChangeText={(emoji) => {
-                  console.log(emoji);
                   dispatch(
                     addTag({
                       symbol: emoji,
@@ -124,7 +127,8 @@ const AddTagFlow = () => {
                     })
                   );
                   setSelectTag(false);
-                  setAddingTagInProgress(false);
+
+                  dispatch(toggle_create_tag_false());
                   setNewTagDescription("");
                 }}
               />
@@ -133,11 +137,12 @@ const AddTagFlow = () => {
         </>
       </>
     );
-  } else {
+  }
+  if (!tagInteraction) {
     return (
       <Pressable
         onPress={() => {
-          setAddingTagInProgress(true);
+          dispatch(toggle_create_tag_true());
         }}
       >
         <View style={styles.buttonContainer}>
