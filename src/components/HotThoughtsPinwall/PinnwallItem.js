@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import ThoughtBubble from "../AllDaysView/ThoughtBubble";
+import ThoughtBubble from "../utils/ThoughtBubble";
 import { useDispatch } from "react-redux";
 import { unPinThought } from "../../redux/actions/thoughtActions";
 import revealOnRightSwipeWrapperView from "../../Styles/revealOnRightSwipeWrapperView";

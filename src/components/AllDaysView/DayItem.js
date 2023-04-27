@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Pressable, Linking } from "react-native";
 import { useDispatch } from "react-redux";
 import { pinThought } from "../../redux/actions/thoughtActions";
 import SwipeableComponent from "../SwipeableComponent/SwipeableComponent";
-import ThoughtBubble from "./ThoughtBubble";
+import ThoughtBubble from "../utils/ThoughtBubble";
 import revealOnRightSwipeWrapperView from "../../Styles/revealOnRightSwipeWrapperView";
 import { toggle_create_thought_update } from "../../redux/actions/newThoughtCreationActions";
 
