@@ -4,6 +4,14 @@ import { useState } from "react";
 const ButtonAnimationWrapper = (props) => {
   const [scaleAnimation] = useState(new Animated.Value(1));
 
+  const handleLongPress = () => {
+    if (props.onLongPress) {
+      return props.onLongPress();
+    } else {
+      console.log("NO Long PRess function Specified");
+    }
+  };
+
   const handleTap = () => {
     Animated.sequence([
       Animated.timing(scaleAnimation, {
@@ -21,7 +29,9 @@ const ButtonAnimationWrapper = (props) => {
   };
   return (
     <Animated.View style={{ transform: [{ scale: scaleAnimation }] }}>
-      <Pressable onPress={handleTap}>{props.children}</Pressable>
+      <Pressable onPress={handleTap} onLongPress={handleLongPress}>
+        {props.children}
+      </Pressable>
     </Animated.View>
   );
 };

@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import ButtonAnimationWrapper from "../utils/ButtonAnimationWrapper";
 import { theme } from "../../Styles/theme";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toggle_create_thought_true } from "../../redux/actions/newThoughtCreationActions";
 import footerText from "../../Styles/footerText";
+import { useState } from "react";
 
 const styles = StyleSheet.create({
   newThoughtButtonContainerView: {
@@ -38,7 +39,40 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     textAlign: "center",
   },
+  captureAudioSquare: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    backgroundColor: theme.colors.uiError,
+    borderWidth: 1,
+    borderColor: theme.colorPalette[50],
+  },
 });
+
+const NewThoughtCreationButton = ({
+  onClickCreateThought,
+  captureAudioOnLongPress,
+}) => {
+  return (
+    <ButtonAnimationWrapper
+      onClick={onClickCreateThought}
+      onLongPress={captureAudioOnLongPress}
+    >
+      <View styles={styles.newThoughtButtonContentWrapper}>
+        <Text style={styles.newThoughtButtonEmoji}>🤯</Text>
+        <Text style={styles.newThoughtButtonText}>New</Text>
+      </View>
+    </ButtonAnimationWrapper>
+  );
+};
+
+const AudioCaptureInProgress = ({ onStopRecording }) => {
+  return (
+    <Pressable onPress={onStopRecording}>
+      <View style={styles.captureAudioSquare}></View>
+    </Pressable>
+  );
+};
 
 const NewThoughtButton = () => {
   const navigate = useNavigate();
@@ -46,22 +80,32 @@ const NewThoughtButton = () => {
   const { thoughtInteraction } = useSelector(
     (state) => state.thoughtCreationReducer
   );
+  const [capturingAudio, setCapturingAudio] = useState(false);
 
   const onClickCreateThought = () => {
     navigate("/");
     dispatch(toggle_create_thought_true());
   };
 
+  const captureAudioOnLongPress = () => {
+    console.log("Capture Audio");
+    setCapturingAudio(true);
+  };
+
   return (
     <>
       {!thoughtInteraction && (
         <View style={styles.newThoughtButtonContainerView}>
-          <ButtonAnimationWrapper onClick={onClickCreateThought}>
-            <View styles={styles.newThoughtButtonContentWrapper}>
-              <Text style={styles.newThoughtButtonEmoji}>🤯</Text>
-              <Text style={styles.newThoughtButtonText}>New</Text>
-            </View>
-          </ButtonAnimationWrapper>
+          {capturingAudio ? (
+            <AudioCaptureInProgress
+              onStopRecording={() => setCapturingAudio(false)}
+            />
+          ) : (
+            <NewThoughtCreationButton
+              onClickCreateThought={onClickCreateThought}
+              captureAudioOnLongPress={captureAudioOnLongPress}
+            />
+          )}
         </View>
       )}
     </>
