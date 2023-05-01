@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { theme } from "../../Styles/theme";
 import DayItem from "./DayItem";
 import Header from "../Header";
+import LoadingComponent from "./LoadingComponent";
 
 const styles = StyleSheet.create({
   seperator: {
@@ -24,6 +25,7 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     display: "flex",
     justifyContent: "space-between",
+    marginBottom: -8,
   },
   sectionHeaderViewContainer: {
     display: "flex",
@@ -39,6 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 20,
   },
+  sectionListFooterComponentView: { paddingTop: 8 },
 });
 
 const createThoughtsNestedByDatesArray = (thoughtsArray) => {
@@ -118,8 +121,14 @@ const AllDaysView = ({ awaitTranscription }) => {
         }}
         ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
         onScrollToIndexFailed={handleScrollFailed}
+        ListFooterComponent={() => {
+          return (
+            <View style={styles.sectionListFooterComponentView}>
+              {awaitTranscription ? <LoadingComponent /> : null}
+            </View>
+          );
+        }}
       />
-      {awaitTranscription ? <Text>Loading</Text> : null}
     </View>
   );
 };
