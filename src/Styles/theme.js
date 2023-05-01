@@ -22,5 +22,6 @@ export const theme = {
   containers: {
     margin: 8,
     footerHeight: 85,
+    minHeightAndLineHeight: 50,
   },
 };

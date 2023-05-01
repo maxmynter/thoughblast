@@ -21,6 +21,7 @@ import { toggle_create_thought_false } from "../../redux/actions/newThoughtCreat
 import DeleteThoughtButton from "../utils/DeleteThoughtButton";
 import { theme } from "../../Styles/theme";
 import { FlatList } from "react-native-gesture-handler";
+import TagList from "./TagList";
 
 const styles = StyleSheet.create({
   keyboardAvoidingView: {
@@ -44,15 +45,6 @@ const styles = StyleSheet.create({
   },
   newThoughtTextInputView: { flexShrink: 1 },
   textInputStyle: {},
-  tagSelectorContainerView: {
-    marginBottom: 16,
-    paddingTop: 8,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    flexWrap: "wrap",
-    justifyContent: "flex-start",
-  },
   invisibleContainerToDetectClickOutside: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
@@ -61,11 +53,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     top: 0,
-  },
-  tagListContainerStyles: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
   },
   submitButton: {
     backgroundColor: theme.colorPalette[950],
@@ -86,6 +73,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
   },
+  tagListWrapper: { paddingTop: 8, marginBottom: 16 },
 });
 
 function NewThoughtCreation() {
@@ -207,22 +195,10 @@ function NewThoughtCreation() {
                 />
               </View>
             </View>
-            <View style={styles.tagSelectorContainerView}>
-              <FlatList
-                data={tags.filter((tag) => tag.status !== "deleted")}
-                autoFocus={true}
-                keyboardShouldPersistTaps={"handled"}
-                horizontal={true}
-                contentContainerStyle={styles.tagListContainerStyles}
-                showsHorizontalScrollIndicator={false}
-                renderItem={({ item }) => (
-                  <TagSelector
-                    key={item.id}
-                    tag={item.symbol}
-                    isSelected={item.id === selectedTagID}
-                    handlePress={() => handlePressTag(item)}
-                  />
-                )}
+            <View style={styles.tagListWrapper}>
+              <TagList
+                selectedTagID={selectedTagID}
+                handlePressTag={handlePressTag}
               />
             </View>
             <Pressable

@@ -27,7 +27,7 @@ const resetThoughts = () => {
 };
 
 const updateThought = ({ thought }) => {
-  console.log("in update thought", thought);
+  console.log("In update thought", thought);
   return {
     type: "UPDATE_THOUGHT",
     payload: thought,

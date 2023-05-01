@@ -26,6 +26,8 @@ export default {
     favicon: "./assets/favicon.png",
   },
   extra: {
+    flaskBackendURI: process.env.REACT_APP_FLASK_BACKEND_URI,
+    secret: process.env.REACT_APP_WHISPER_SECRET,
     eas: {
       projectId: "9fdbd214-041e-4df4-8e20-612f281cb097",
     },

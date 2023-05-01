@@ -60,7 +60,7 @@ const createThoughtsNestedByDatesArray = (thoughtsArray) => {
   return data.sort((a, b) => new Date(a.title) - new Date(b.title));
 };
 
-const AllDaysView = () => {
+const AllDaysView = ({ awaitTranscription }) => {
   const data = createThoughtsNestedByDatesArray(
     useSelector((state) => state.thoughtReducer)
   );
@@ -119,6 +119,7 @@ const AllDaysView = () => {
         ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
         onScrollToIndexFailed={handleScrollFailed}
       />
+      {awaitTranscription ? <Text>Loading</Text> : null}
     </View>
   );
 };
