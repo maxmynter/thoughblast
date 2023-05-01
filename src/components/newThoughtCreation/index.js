@@ -82,7 +82,9 @@ function NewThoughtCreation() {
     (state) => state.thoughtCreationReducer
   );
   const [thought, setThought] = useState(null);
-  const [selectedTagID, setSelectedTagID] = useState(tags[0].id);
+  const [selectedTagID, setSelectedTagID] = useState(
+    tags.find((tag) => "deleted" !== tag.status).id
+  );
   const dispatch = useDispatch();
 
   const submitThought = (tag) => {
