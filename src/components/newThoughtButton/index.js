@@ -11,6 +11,7 @@ import { Audio } from "expo-av";
 import transcribeRecording from "../../api/transcribeRecording";
 import TagList from "../newThoughtCreation/TagList";
 import { addThought } from "../../redux/actions/thoughtActions";
+import * as FileSystem from "expo-file-system";
 
 const styles = StyleSheet.create({
   newThoughtButtonContainerView: {
@@ -169,12 +170,13 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
       allowsRecordingIOS: false,
     });
     const uri = recording.getURI();
+    console.log(uri);
     setCapturingAudio(false);
-    // To Delete check out expo-file-system, FileSystem.deleteAsync(filePath)
 
     setSelectedTag(false);
     setAwaitTranscription(true);
     const transcribedRecording = await transcribeRecording(uri);
+    console.log(transcribeRecording);
     dispatch(
       addThought({
         thought: {
@@ -183,6 +185,8 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
         },
       })
     );
+    console.log("DELETE ASYNC", FileSystem.deleteAsync);
+    FileSystem.deleteAsync(uri);
     setAwaitTranscription(false);
   };
 
