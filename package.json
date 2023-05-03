@@ -8,6 +8,7 @@
     "tunnel": "expo start --tunnel",
     "android": "expo start --android",
     "build-ios": "eas build --platform ios",
+    "build-ios-local": "eas build --platform ios --local",
     "submit-build-ios": "eas submit --platform ios ",
     "ios": "expo start --ios",
     "web": "expo start --web",
