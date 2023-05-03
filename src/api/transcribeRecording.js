@@ -5,8 +5,7 @@ import signJWT from "./utils/signJWS";
 
 const transcribeRecording = async (uri) => {
   const SECRET = Constants.manifest.extra.secret;
-  const REQUEST_TOKEN =
-    "eyJhbGciOiJIUzI1NiIsInR5c2VYyyBbbMmmFtZSI6Im1sdXVra2FpIiwiaW";
+  const REQUEST_TOKEN = Constants.manifest.extra.flask_token;
   const filetype = uri.split(".").pop();
   const filename = uri.split("/").pop();
 
@@ -22,15 +21,20 @@ const transcribeRecording = async (uri) => {
     },
     "temp_recording"
   );
+  formDataForRequest.append("summarise", "summarise");
   const header = {
     alg: "HS256",
     typ: "JWT",
   };
 
   const token = signJWT(header, { token: REQUEST_TOKEN }, SECRET);
+  console.log(
+    `Sending to: ${Constants.manifest.extra.flaskBackendURI}/transcribe`
+  );
   const response = await axios({
     url: `${Constants.manifest.extra.flaskBackendURI}/transcribe`,
     method: "POST",
+    timeout: 300 * 1000, // Same as Railway timeout, 300 sec
     data: formDataForRequest,
     headers: {
       Authorization: `Bearer ${token}`,
@@ -39,7 +43,7 @@ const transcribeRecording = async (uri) => {
     },
   });
 
-  console.log("dayta: ", response.data);
+  console.log("Returned Data: ", response.data);
 
   return response.data;
 };
