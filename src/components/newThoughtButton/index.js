@@ -1,17 +1,16 @@
-import { Dimensions, StyleSheet, Text, View } from "react-native";
-import ButtonAnimationWrapper from "../utils/ButtonAnimationWrapper";
+import { Dimensions, StyleSheet, Text, View, Alert } from "react-native";
 import { theme } from "../../Styles/theme";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toggle_create_thought_true } from "../../redux/actions/newThoughtCreationActions";
-import footerText from "../../Styles/footerText";
 import { useState } from "react";
 import { Audio } from "expo-av";
 import transcribeRecording from "../../api/transcribeRecording";
 import TagList from "../newThoughtCreation/TagList";
 import { addThought } from "../../redux/actions/thoughtActions";
 import * as FileSystem from "expo-file-system";
+import NewThoughtCreationIcon from "./NewThoughtCreationIcon";
 
 const styles = StyleSheet.create({
   newThoughtButtonContainerView: {
@@ -27,24 +26,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     ...elevatedShadowProps,
   },
-  newThoughtButtonContentWrapper: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  newThoughtButtonEmoji: {
-    textAlign: "center",
-    fontSize: footerText.fontSize,
-  },
-  newThoughtButtonText: {
-    color: theme.colorPalette[50],
-    fontWeight: "bold",
-    fontSize: 11,
-    textAlignVertical: "center",
-    textAlign: "center",
-  },
-
   tagSelectorContainer: {
     paddingTop: 8,
     paddingBottom: 8,
@@ -88,23 +69,6 @@ const styles = StyleSheet.create({
     borderColor: theme.colorPalette[200],
   },
 });
-
-const NewThoughtCreationButton = ({
-  onClickCreateThought,
-  captureAudioOnLongPress,
-}) => {
-  return (
-    <ButtonAnimationWrapper
-      onClick={onClickCreateThought}
-      onLongPress={captureAudioOnLongPress}
-    >
-      <View styles={styles.newThoughtButtonContentWrapper}>
-        <Text style={styles.newThoughtButtonEmoji}>🤯</Text>
-        <Text style={styles.newThoughtButtonText}>New</Text>
-      </View>
-    </ButtonAnimationWrapper>
-  );
-};
 
 const NewThoughtButton = ({ setAwaitTranscription }) => {
   const navigate = useNavigate();
@@ -152,10 +116,17 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
           linearPCMIsFloat: false,
         },
       };
+      let recording = new Audio.Recording();
+      setRecording(recording);
+      console.log("before Audio.recording");
 
-      const { recording } = await Audio.Recording.createAsync(
+      await recording.prepareToRecordAsync(
         RECORDING_OPTIONS_PRESET_HIGH_QUALITY
       );
+
+      console.log("AND in between");
+      await recording.startAsync();
+      console.log("after audio. recording", recording);
       setRecording(recording);
     } catch (err) {
       console.log("Couldn't start recording", err);
@@ -175,18 +146,25 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
 
     setSelectedTag(false);
     setAwaitTranscription(true);
-    const transcribedRecording = await transcribeRecording(uri);
-    console.log(transcribeRecording);
-    dispatch(
-      addThought({
-        thought: {
-          tag: tags.find((tag) => tag.id === tagOfRecording.id).symbol,
-          text: transcribedRecording,
-        },
-      })
-    );
-    console.log("DELETE ASYNC", FileSystem.deleteAsync);
-    FileSystem.deleteAsync(uri);
+    try {
+      const transcribedRecording = await transcribeRecording(uri);
+      console.log(transcribeRecording);
+      dispatch(
+        addThought({
+          thought: {
+            tag: tags.find((tag) => tag.id === tagOfRecording.id).symbol,
+            text: transcribedRecording,
+          },
+        })
+      );
+      console.log("DELETE ASYNC", FileSystem.deleteAsync);
+      FileSystem.deleteAsync(uri);
+    } catch (err) {
+      console.log("Error. Smth. went wrong... ", err);
+      Alert.alert("Error", "Something went wrong with transcribing", [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+    }
     setAwaitTranscription(false);
   };
 
@@ -224,7 +202,7 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
           ) : (
             <View style={styles.newThoughtButtonContainerView}>
               {capturingAudio ? null : (
-                <NewThoughtCreationButton
+                <NewThoughtCreationIcon
                   onClickCreateThought={onClickCreateThought}
                   captureAudioOnLongPress={captureAudioOnLongPress}
                 />
