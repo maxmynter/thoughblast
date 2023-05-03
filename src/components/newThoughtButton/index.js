@@ -118,15 +118,12 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
       };
       let recording = new Audio.Recording();
       setRecording(recording);
-      console.log("before Audio.recording");
 
       await recording.prepareToRecordAsync(
         RECORDING_OPTIONS_PRESET_HIGH_QUALITY
       );
 
-      console.log("AND in between");
       await recording.startAsync();
-      console.log("after audio. recording", recording);
       setRecording(recording);
     } catch (err) {
       console.log("Couldn't start recording", err);
@@ -141,14 +138,12 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
       allowsRecordingIOS: false,
     });
     const uri = recording.getURI();
-    console.log(uri);
     setCapturingAudio(false);
 
     setSelectedTag(false);
     setAwaitTranscription(true);
     try {
       const transcribedRecording = await transcribeRecording(uri);
-      console.log(transcribeRecording);
       dispatch(
         addThought({
           thought: {
@@ -157,10 +152,9 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
           },
         })
       );
-      console.log("DELETE ASYNC", FileSystem.deleteAsync);
       FileSystem.deleteAsync(uri);
     } catch (err) {
-      console.log("Error. Smth. went wrong... ", err);
+      console.log("Error. Smth. went wrong... ", err.response.data);
       Alert.alert("Error", "Something went wrong with transcribing", [
         { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
