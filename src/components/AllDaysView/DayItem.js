@@ -55,9 +55,3 @@ const DayItem = ({ item }) => {
 };
 
 export default DayItem;
-
-/*
-
-
-
-*/

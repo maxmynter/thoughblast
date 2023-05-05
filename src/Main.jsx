@@ -4,7 +4,6 @@ import AllDaysView from "./components/AllDaysView";
 import NewThoughtCreation from "./components/newThoughtCreation";
 import { theme } from "./Styles/theme";
 import HotThoughtsPinwall from "./components/HotThoughtsPinwall";
-import CustomizeTagsPage from "./components/CustomizeTagsPage";
 import Footer from "./components/Footer";
 import { useSelector } from "react-redux";
 import NewThoughtButton from "./components/newThoughtButton";
@@ -27,7 +26,6 @@ const Main = () => {
           path="/"
           element={<AllDaysView awaitTranscription={awaitTranscription} />}
         />
-        <Route path="/customizeTags" element={<CustomizeTagsPage />} />
         <Route path="/hotThoughts" element={<HotThoughtsPinwall />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

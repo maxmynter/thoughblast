@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, Alert } from "react-native";
+import { Dimensions, StyleSheet, View, Alert, Pressable } from "react-native";
 import { theme } from "../../Styles/theme";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,13 +7,14 @@ import { toggle_create_thought_true } from "../../redux/actions/newThoughtCreati
 import { useState } from "react";
 import { Audio } from "expo-av";
 import transcribeRecording from "../../api/transcribeRecording";
-import TagList from "../newThoughtCreation/TagList";
 import { addThought } from "../../redux/actions/thoughtActions";
 import * as FileSystem from "expo-file-system";
 import NewThoughtCreationIcon from "./NewThoughtCreationIcon";
+import { RECORDING_OPTIONS_PRESET_HIGH_QUALITY } from "./audioRecodingPresets";
 
 const styles = StyleSheet.create({
   newThoughtButtonContainerView: {
+    padding: 0,
     position: "absolute",
     bottom: Dimensions.get("window").height * 0.17,
     right: 8,
@@ -35,39 +36,15 @@ const styles = StyleSheet.create({
     ...elevatedShadowProps,
   },
   recordInProgressContainer: {
-    ...elevatedShadowProps,
-    marginLeft: 8,
-    marginRight: 8,
+    borderWidth: 2,
+    borderColor: theme.colorPalette[50],
     backgroundColor: theme.colors.uiError,
+    minHeight: 32,
+    minWidth: 32,
     borderRadius: 8,
-    marginBottom: 8,
     width: "100%",
   },
-  recordInProgressText: {
-    fontWeight: "bold",
-    textAlign: "center",
-    color: theme.colorPalette[50],
-    padding: 4,
-  },
-  recordingWrapper: {
-    position: "absolute",
-    bottom: Dimensions.get("window").height * 0.17,
-    right: 8,
-    left: 8,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  loadingAnimationView: {
-    width: 64,
-    height: 64,
-    borderRadius: 64 / 2,
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderBottomColor: "transparent",
-    borderWidth: 4,
-    borderColor: theme.colorPalette[200],
-  },
+  stopRecordingPressable: {},
 });
 
 const NewThoughtButton = ({ setAwaitTranscription }) => {
@@ -76,10 +53,8 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
   const { thoughtInteraction } = useSelector(
     (state) => state.thoughtCreationReducer
   );
-  const tags = useSelector((state) => state.tagReducer);
   const [capturingAudio, setCapturingAudio] = useState(false);
   const [recording, setRecording] = useState(undefined);
-  const [selectedTag, setSelectedTag] = useState(false);
 
   const onClickCreateThought = () => {
     navigate("/");
@@ -96,26 +71,6 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
       });
       console.log("Starting recording..");
 
-      const RECORDING_OPTIONS_PRESET_HIGH_QUALITY = {
-        android: {
-          extension: ".mp4",
-          outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
-          audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_AMR_NB,
-          sampleRate: 44100,
-          numberOfChannels: 2,
-          bitRate: 128000,
-        },
-        ios: {
-          extension: ".wav",
-          audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_MIN,
-          sampleRate: 44100,
-          numberOfChannels: 2,
-          bitRate: 128000,
-          linearPCMBitDepth: 16,
-          linearPCMIsBigEndian: false,
-          linearPCMIsFloat: false,
-        },
-      };
       let recording = new Audio.Recording();
       setRecording(recording);
 
@@ -130,7 +85,7 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
     }
   };
 
-  const onStopRecording = async (tagOfRecording) => {
+  const onStopRecording = async () => {
     console.log("Stopping recording..");
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
@@ -140,14 +95,12 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
     const uri = recording.getURI();
     setCapturingAudio(false);
 
-    setSelectedTag(false);
     setAwaitTranscription(true);
     try {
       const transcribedRecording = await transcribeRecording(uri);
       dispatch(
         addThought({
           thought: {
-            tag: tags.find((tag) => tag.id === tagOfRecording.id).symbol,
             text: transcribedRecording,
           },
         })
@@ -177,32 +130,25 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
     <>
       {!thoughtInteraction && (
         <>
-          {capturingAudio && !selectedTag ? (
-            <View style={styles.recordingWrapper}>
-              <View style={styles.recordInProgressContainer}>
-                <Text style={styles.recordInProgressText}>
-                  Recording ... Select TAG to Stop
-                </Text>
-              </View>
-              <View style={styles.tagSelectorContainer}>
-                <TagList
-                  handlePressTag={(item) => {
-                    setSelectedTag(true);
-                    onStopRecording(item);
-                  }}
-                />
-              </View>
-            </View>
-          ) : (
+          {
             <View style={styles.newThoughtButtonContainerView}>
-              {capturingAudio ? null : (
+              {capturingAudio ? (
+                <Pressable
+                  style={styles.stopRecordingPressable}
+                  onPress={() => {
+                    onStopRecording();
+                  }}
+                >
+                  <View style={styles.recordInProgressContainer} />
+                </Pressable>
+              ) : (
                 <NewThoughtCreationIcon
                   onClickCreateThought={onClickCreateThought}
                   captureAudioOnLongPress={captureAudioOnLongPress}
                 />
               )}
             </View>
-          )}
+          }
         </>
       )}
     </>
