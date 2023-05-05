@@ -12,7 +12,6 @@ import {
   Pressable,
 } from "react-native";
 import { useState } from "react";
-import TagSelector from "./TagSelector";
 import thoughtViewContainer from "../../Styles/thoughtViewContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { addThought, updateThought } from "../../redux/actions/thoughtActions";
@@ -20,8 +19,6 @@ import elevatedShadowProps from "../../Styles/elevatedShadowProps";
 import { toggle_create_thought_false } from "../../redux/actions/newThoughtCreationActions";
 import DeleteThoughtButton from "../utils/DeleteThoughtButton";
 import { theme } from "../../Styles/theme";
-import { FlatList } from "react-native-gesture-handler";
-import TagList from "./TagList";
 
 const styles = StyleSheet.create({
   keyboardAvoidingView: {
@@ -73,31 +70,26 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
   },
-  tagListWrapper: { paddingTop: 8, marginBottom: 16 },
 });
 
 function NewThoughtCreation() {
-  const tags = useSelector((state) => state.tagReducer);
   const { thoughtInteraction, item } = useSelector(
     (state) => state.thoughtCreationReducer
   );
   const [thought, setThought] = useState(null);
-  const [selectedTagID, setSelectedTagID] = useState(
-    tags.find((tag) => "deleted" !== tag.status).id
-  );
   const dispatch = useDispatch();
 
-  const submitThought = (tag) => {
+  const submitThought = () => {
     if (item) {
       dispatch(
         updateThought({
-          thought: { ...item, tag: tag.symbol, text: thought },
+          thought: { ...item, text: thought },
         })
       );
     } else {
       dispatch(
         addThought({
-          thought: { tag: tag.symbol, text: thought },
+          thought: { text: thought },
         })
       );
     }
@@ -106,17 +98,11 @@ function NewThoughtCreation() {
   };
 
   const onClickOutside = () => {
-    if (
-      thoughtInteraction == "create" &&
-      (thought === null || thought === "")
-    ) {
+    if (thoughtInteraction == "create") {
       //Dismiss thought, if thought was not edited
       dispatch(toggle_create_thought_false());
     }
-    if (thoughtInteraction == "create" && thought !== null && thought !== "") {
-      //Submit thought on click outside
-      submitThought(tags.find((tag) => tag.id === selectedTagID));
-    }
+
     if (thoughtInteraction == "edit") {
       // on click outside when thought edited, changes the thought
       dispatch(
@@ -155,14 +141,6 @@ function NewThoughtCreation() {
     );
   };
 
-  const handlePressTag = (item) => {
-    if (item.id === selectedTagID) {
-      submitThought(item);
-    } else {
-      setSelectedTagID(item.id);
-    }
-  };
-
   const checkThoughtSubmittable = () => {
     if (thought !== null && thought.length > 0) {
       return true;
@@ -197,19 +175,7 @@ function NewThoughtCreation() {
                 />
               </View>
             </View>
-            <View style={styles.tagListWrapper}>
-              <TagList
-                selectedTagID={selectedTagID}
-                handlePressTag={handlePressTag}
-              />
-            </View>
-            <Pressable
-              onPress={() => {
-                if (checkThoughtSubmittable()) {
-                  submitThought(tags.find((tag) => tag.id === selectedTagID));
-                }
-              }}
-            >
+            <Pressable onPress={submitThought}>
               <View
                 style={{
                   ...styles.submitButton,

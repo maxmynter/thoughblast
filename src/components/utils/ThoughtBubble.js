@@ -21,24 +21,13 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     color: theme.colorPalette[950],
   },
-  tagContainer: {
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    margin: 8,
-  },
-  tagText: {},
 });
 
 const ThoughtBubble = ({ item }) => {
-  const { text, tag, id } = item;
+  const { text, id } = item;
 
   return (
     <View style={styles.thoughtViewContainer} key={id}>
-      <View style={styles.tagContainer}>
-        <Text style={styles.tagText}>{tag}</Text>
-      </View>
       <View style={styles.noteContainer}>
         <Text style={styles.notetext}>{text}</Text>
       </View>

@@ -66,15 +66,16 @@ const Footer = ({ display }) => {
                 </Text>
               </View>
             </GoToPageButton>
-
             <GoToPageButton
-              isOnPage={location.pathname === "/customizeTags"}
-              leftBorder={true}
-              onClick={() => navigate("/customizeTags")}
+              isOnPage={location.pathname === "/settings"}
+              rightBorder={true}
+              onClick={() => navigate("/")}
             >
               <View style={styles.goToPageButtonContainerView}>
-                <Text style={styles.footerText}>🏷️</Text>
-                <Text style={styles.goToPageButtonExplainerText}>{"Tags"}</Text>
+                <Text style={styles.footerText}>⚙️</Text>
+                <Text style={styles.goToPageButtonExplainerText}>
+                  {"Settings"}
+                </Text>
               </View>
             </GoToPageButton>
           </View>
