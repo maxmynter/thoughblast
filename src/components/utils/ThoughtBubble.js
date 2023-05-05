@@ -6,12 +6,13 @@ const styles = StyleSheet.create({
   thoughtViewContainer: {
     ...thoughtViewContainer,
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
   },
   noteContainer: {
     padding: 8,
     paddingRight: 8,
     flexShrink: 1,
+    marginBottom: 16,
   },
   notetext: {
     display: "flex",
@@ -21,15 +22,30 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     color: theme.colorPalette[950],
   },
+  dateContainer: { paddingLeft: 8, paddingRight: 8 },
+  dateText: { fontSize: 11, color: theme.colors.uiGrey },
 });
 
 const ThoughtBubble = ({ item }) => {
   const { text, id } = item;
+  var dateFormat = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    weekday: "short",
+  };
 
   return (
     <View style={styles.thoughtViewContainer} key={id}>
       <View style={styles.noteContainer}>
         <Text style={styles.notetext}>{text}</Text>
+      </View>
+      <View style={styles.dateContainer}>
+        <Text style={styles.dateText}>
+          {new Date(item.createdAt).toLocaleDateString("en-US", dateFormat)}
+        </Text>
       </View>
     </View>
   );
