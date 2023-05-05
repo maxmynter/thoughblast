@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 import { theme } from "../../Styles/theme";
 import DayItem from "./DayItem";
 import Header from "../Header";
-import LoadingComponent from "./LoadingComponent";
 
 const styles = StyleSheet.create({
   seperator: {
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
   sectionListFooterComponentView: { paddingTop: 8 },
 });
 
-const AllDaysView = ({ awaitTranscription }) => {
+const AllDaysView = () => {
   const data = useSelector((state) => state.thoughtReducer);
   const flatListRef = useRef();
 
@@ -62,7 +61,7 @@ const AllDaysView = ({ awaitTranscription }) => {
     <View style={styles.allThoughtsContainer}>
       <Header text="Thoughts" />
       <FlatList
-        data={data}
+        data={data.filter((item) => item.status !== "deleted")}
         contentContainerStyle={styles.FlatListContentContainer}
         showsVerticalScrollIndicator={false}
         ref={flatListRef}
@@ -74,13 +73,6 @@ const AllDaysView = ({ awaitTranscription }) => {
         }}
         ItemSeparatorComponent={() => <View style={styles.seperator}></View>}
         onScrollToIndexFailed={handleScrollFailed}
-        ListFooterComponent={() => {
-          return (
-            <View style={styles.sectionListFooterComponentView}>
-              {awaitTranscription ? <LoadingComponent /> : null}
-            </View>
-          );
-        }}
       />
     </View>
   );

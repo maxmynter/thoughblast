@@ -7,7 +7,6 @@ import HotThoughtsPinwall from "./components/HotThoughtsPinwall";
 import Footer from "./components/Footer";
 import { useSelector } from "react-redux";
 import NewThoughtButton from "./components/newThoughtButton";
-import { useState } from "react";
 
 const styles = StyleSheet.create({
   appContainer: { backgroundColor: theme.colors.uiWhite, flex: 1 },
@@ -17,19 +16,15 @@ const Main = () => {
   const { thoughtInteraction } = useSelector(
     (state) => state.thoughtCreationReducer
   );
-  const [awaitTranscription, setAwaitTranscription] = useState(false);
 
   return (
     <View style={styles.appContainer}>
       <Routes>
-        <Route
-          path="/"
-          element={<AllDaysView awaitTranscription={awaitTranscription} />}
-        />
+        <Route path="/" element={<AllDaysView />} />
         <Route path="/hotThoughts" element={<HotThoughtsPinwall />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <NewThoughtButton setAwaitTranscription={setAwaitTranscription} />
+      <NewThoughtButton />
       <NewThoughtCreation />
       <Footer display={!thoughtInteraction} />
     </View>
