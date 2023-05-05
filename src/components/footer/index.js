@@ -18,11 +18,12 @@ const styles = StyleSheet.create({
   },
   buttonsContainerView: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     alignItems: "baseline",
     flexDirection: "row",
     paddingLeft: 8,
     paddingRight: 8,
+    width: "100%",
   },
   footerText: { ...footerText },
   goToPageButtonContainerView: {
@@ -63,18 +64,6 @@ const Footer = ({ display }) => {
                 <Text style={styles.footerText}>💭</Text>
                 <Text style={styles.goToPageButtonExplainerText}>
                   {"Thoughts"}
-                </Text>
-              </View>
-            </GoToPageButton>
-            <GoToPageButton
-              isOnPage={location.pathname === "/settings"}
-              rightBorder={true}
-              onClick={() => navigate("/")}
-            >
-              <View style={styles.goToPageButtonContainerView}>
-                <Text style={styles.footerText}>⚙️</Text>
-                <Text style={styles.goToPageButtonExplainerText}>
-                  {"Settings"}
                 </Text>
               </View>
             </GoToPageButton>
