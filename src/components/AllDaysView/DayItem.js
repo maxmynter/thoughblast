@@ -1,10 +1,18 @@
-import { View, Text, StyleSheet, Pressable, Linking } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Linking,
+  Alert,
+} from "react-native";
 import { useDispatch } from "react-redux";
-import { pinThought } from "../../redux/actions/thoughtActions";
+import { pinThought, updateThought } from "../../redux/actions/thoughtActions";
 import SwipeableComponent from "../SwipeableComponent/SwipeableComponent";
 import ThoughtBubble from "../utils/ThoughtBubble";
 import revealOnRightSwipeWrapperView from "../../Styles/revealOnRightSwipeWrapperView";
 import { toggle_create_thought_update } from "../../redux/actions/newThoughtCreationActions";
+import transcribeRecording from "../../api/transcribeRecording";
 
 const styles = StyleSheet.create({
   rightSwipeWrapperView: { ...revealOnRightSwipeWrapperView },
@@ -36,11 +44,40 @@ const DayItem = ({ item }) => {
         dispatch(toggle_create_thought_update(item));
         console.log("Long Press");
       }}
-      onPress={() => {
+      onPress={async () => {
         console.log("pressed", item.id);
         // on press on the component asking for feedback (id === 1 ) open feedback mail.
         if (item.id === 1) {
           Linking.openURL("mailto:thoughtblast4buildspace@gmail.com");
+        }
+        if (item.status === "transcribeError") {
+          try {
+            dispatch(
+              updateThought({
+                thought: { id: item.id, status: "transcribing" },
+              })
+            );
+            const transcribedRecording = await transcribeRecording(item.audio);
+            dispatch(
+              updateThought({
+                thought: {
+                  id: item.id,
+                  text: transcribedRecording,
+                  status: "transcribed",
+                },
+              })
+            );
+          } catch (err) {
+            console.log("Error", err);
+            dispatch(
+              updateThought({
+                thought: { id: item.id, status: "transcribeError" },
+              })
+            );
+            Alert.alert("Error", "Something went wrong. Try again later", [
+              { text: "OK" },
+            ]);
+          }
         }
       }}
     >
