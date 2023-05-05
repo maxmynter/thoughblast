@@ -1,8 +1,9 @@
-import { Dimensions, StyleSheet, View, Alert, Pressable } from "react-native";
+import { Dimensions, StyleSheet, View, Pressable } from "react-native";
 import { theme } from "../../Styles/theme";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import { toggle_create_thought_true } from "../../redux/actions/newThoughtCreationActions";
 import { useState } from "react";
 import { Audio } from "expo-av";
@@ -53,7 +54,6 @@ const NewThoughtButton = () => {
   const { thoughtInteraction } = useSelector(
     (state) => state.thoughtCreationReducer
   );
-  const thoughts = useSelector((state) => state.thoughtReducer);
   const [capturingAudio, setCapturingAudio] = useState(false);
   const [recording, setRecording] = useState(undefined);
 
@@ -96,28 +96,34 @@ const NewThoughtButton = () => {
     const uri = recording.getURI();
     setCapturingAudio(false);
 
+    const newThoughtID = uuidv4();
     dispatch(
       addThought({
         thought: {
+          id: newThoughtID,
           status: "transcribing",
           audio: uri,
         },
       })
     );
-    const newThought = thoughts.find(
-      (thought) => "transcribing" === thought.status
-    );
+
     try {
       const transcribedRecording = await transcribeRecording(uri);
-      dispatch(updateThought({ ...newThought, text: transcribedRecording }));
-
-      FileSystem.deleteAsync(uri);
-    } catch (err) {
       dispatch(
         updateThought({
-          ...newThought,
-          status: "transcribeError",
-          text: "❌ Something went wrong with transcribing. Tap this thought to tray again.",
+          thought: { id: newThoughtID, text: transcribedRecording },
+        })
+      );
+      FileSystem.deleteAsync(uri);
+    } catch (err) {
+      console.log(err);
+      dispatch(
+        updateThought({
+          thought: {
+            id: newThoughtID,
+            status: "transcribeError",
+            text: "❌ Something went wrong with transcribing. Tap this thought to tray again.",
+          },
         })
       );
     }

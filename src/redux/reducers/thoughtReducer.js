@@ -44,7 +44,7 @@ const thoughtReducer = (state = initialState, action) => {
     case "ADD_THOUGHT": {
       return [
         {
-          id: uuidv4(),
+          id: action.payload.id ? action.payload.id : uuidv4(),
           createdAt: new Date().toISOString(),
           pinnedAtDate: [],
           ...action.payload,
