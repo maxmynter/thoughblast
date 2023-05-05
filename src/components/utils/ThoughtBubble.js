@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import thoughtViewContainer from "../../Styles/thoughtViewContainer";
 import { theme } from "../../Styles/theme";
+import LoadingComponent from "./LoadingComponent";
 
 const styles = StyleSheet.create({
   thoughtViewContainer: {
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
 });
 
 const ThoughtBubble = ({ item }) => {
-  const { text, id } = item;
+  const { text, id, status } = item;
   var dateFormat = {
     year: "numeric",
     month: "numeric",
@@ -39,9 +40,13 @@ const ThoughtBubble = ({ item }) => {
 
   return (
     <View style={styles.thoughtViewContainer} key={id}>
-      <View style={styles.noteContainer}>
-        <Text style={styles.notetext}>{text}</Text>
-      </View>
+      {status === "transcribing" ? (
+        <LoadingComponent />
+      ) : (
+        <View style={styles.noteContainer}>
+          <Text style={styles.notetext}>{text}</Text>
+        </View>
+      )}
       <View style={styles.dateContainer}>
         <Text style={styles.dateText}>
           {new Date(item.createdAt).toLocaleDateString("en-US", dateFormat)}

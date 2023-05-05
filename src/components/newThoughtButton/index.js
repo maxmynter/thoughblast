@@ -7,7 +7,7 @@ import { toggle_create_thought_true } from "../../redux/actions/newThoughtCreati
 import { useState } from "react";
 import { Audio } from "expo-av";
 import transcribeRecording from "../../api/transcribeRecording";
-import { addThought } from "../../redux/actions/thoughtActions";
+import { addThought, updateThought } from "../../redux/actions/thoughtActions";
 import * as FileSystem from "expo-file-system";
 import NewThoughtCreationIcon from "./NewThoughtCreationIcon";
 import { RECORDING_OPTIONS_PRESET_HIGH_QUALITY } from "./audioRecodingPresets";
@@ -47,12 +47,13 @@ const styles = StyleSheet.create({
   stopRecordingPressable: {},
 });
 
-const NewThoughtButton = ({ setAwaitTranscription }) => {
+const NewThoughtButton = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { thoughtInteraction } = useSelector(
     (state) => state.thoughtCreationReducer
   );
+  const thoughts = useSelector((state) => state.thoughtReducer);
   const [capturingAudio, setCapturingAudio] = useState(false);
   const [recording, setRecording] = useState(undefined);
 
@@ -95,24 +96,31 @@ const NewThoughtButton = ({ setAwaitTranscription }) => {
     const uri = recording.getURI();
     setCapturingAudio(false);
 
-    setAwaitTranscription(true);
+    dispatch(
+      addThought({
+        thought: {
+          status: "transcribing",
+          audio: uri,
+        },
+      })
+    );
+    const newThought = thoughts.find(
+      (thought) => "transcribing" === thought.status
+    );
     try {
       const transcribedRecording = await transcribeRecording(uri);
-      dispatch(
-        addThought({
-          thought: {
-            text: transcribedRecording,
-          },
-        })
-      );
+      dispatch(updateThought({ ...newThought, text: transcribedRecording }));
+
       FileSystem.deleteAsync(uri);
     } catch (err) {
-      console.log("Error. Smth. went wrong... ", err.response.data);
-      Alert.alert("Error", "Something went wrong with transcribing", [
-        { text: "OK", onPress: () => console.log("OK Pressed") },
-      ]);
+      dispatch(
+        updateThought({
+          ...newThought,
+          status: "transcribeError",
+          text: "❌ Something went wrong with transcribing. Tap this thought to tray again.",
+        })
+      );
     }
-    setAwaitTranscription(false);
   };
 
   const captureAudioOnLongPress = () => {
