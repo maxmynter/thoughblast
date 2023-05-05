@@ -111,7 +111,11 @@ const NewThoughtButton = () => {
       const transcribedRecording = await transcribeRecording(uri);
       dispatch(
         updateThought({
-          thought: { id: newThoughtID, text: transcribedRecording },
+          thought: {
+            id: newThoughtID,
+            text: transcribedRecording,
+            status: "transcribed",
+          },
         })
       );
       FileSystem.deleteAsync(uri);
