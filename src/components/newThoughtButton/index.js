@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { toggle_create_thought_true } from "../../redux/actions/newThoughtCreationActions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Audio } from "expo-av";
 import transcribeRecording from "../../api/transcribeRecording";
 import { addThought, updateThought } from "../../redux/actions/thoughtActions";
@@ -56,6 +56,17 @@ const NewThoughtButton = () => {
   );
   const [capturingAudio, setCapturingAudio] = useState(false);
   const [recording, setRecording] = useState(undefined);
+
+  useEffect(() => {
+    if (capturingAudio === true) {
+      setTimeout(() => {
+        // If still capturing after max Time.
+        if (capturingAudio === true) {
+          onStopRecording();
+        }
+      }, 1000 ** 60 * 3);
+    }
+  }, [capturingAudio]);
 
   const onClickCreateThought = () => {
     navigate("/");
