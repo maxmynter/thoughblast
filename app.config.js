@@ -2,7 +2,7 @@ import "dotenv/config";
 export default {
   name: "thoughtblast",
   slug: "thoughtblast",
-  version: "1.1.3",
+  version: "1.1.5",
   orientation: "portrait",
   icon: "./assets/icon.png",
   userInterfaceStyle: "light",

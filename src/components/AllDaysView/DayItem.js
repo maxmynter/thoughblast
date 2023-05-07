@@ -74,9 +74,11 @@ const DayItem = ({ item }) => {
                 thought: { id: item.id, status: "transcribeError" },
               })
             );
-            Alert.alert("Error", "Something went wrong. Try again later", [
-              { text: "OK" },
-            ]);
+            Alert.alert(
+              "Error",
+              `Something went wrong. Try again later\n${err}`,
+              [{ text: "OK" }]
+            );
           }
         }
       }}
