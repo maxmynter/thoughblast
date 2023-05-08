@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const initialState = [
   {
-    text: "Thank you for using thought blast.\n\n Enter thoughts by clicking +\n\n Enter voice notes by holding +.\n\n Pin thoughts by swiping thoughts to the left. \n\nDoo the same on the pinwall to unpin.",
+    text: "Thank you for using thought blast.\n\nEnter thoughts by clicking '+'\n\nEnter voice notes by holding '+'\n\nPin thoughts by swiping thoughts to the left. \n\nDo the same on the pinwall to unpin.",
 
     createdAt: new Date().toISOString(),
     pinnedAtDate: [],

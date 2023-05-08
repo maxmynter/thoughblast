@@ -1,9 +1,10 @@
 import axios from "axios";
 import FormData from "form-data";
 import Constants from "expo-constants";
-import signJWT from "./utils/signJWS";
+import signJWT from "./utils/signJWT";
 
 const transcribeRecording = async (uri) => {
+  console.log("Constants.manifest.extra", Constants.manifest.extra);
   const SECRET = Constants.manifest.extra.secret;
   const REQUEST_TOKEN = Constants.manifest.extra.flask_token;
   const filetype = uri.split(".").pop();
@@ -22,6 +23,7 @@ const transcribeRecording = async (uri) => {
     "temp_recording"
   );
   formDataForRequest.append("summarise", "summarise");
+
   const header = {
     alg: "HS256",
     typ: "JWT",

@@ -137,7 +137,7 @@ const NewThoughtButton = () => {
           thought: {
             id: newThoughtID,
             status: "transcribeError",
-            text: "❌ Something went wrong with transcribing. Tap this thought to tray again.",
+            text: "❌ Something went wrong with transcribing. Tap this thought to try again.",
           },
         })
       );
