@@ -13,7 +13,6 @@ import ThoughtBubble from "../utils/ThoughtBubble";
 import revealOnRightSwipeWrapperView from "../../Styles/revealOnRightSwipeWrapperView";
 import { toggle_create_thought_update } from "../../redux/actions/newThoughtCreationActions";
 import transcribeRecording from "../../api/transcribeRecording";
-import Constants from "expo-constants";
 
 const styles = StyleSheet.create({
   rightSwipeWrapperView: { ...revealOnRightSwipeWrapperView },

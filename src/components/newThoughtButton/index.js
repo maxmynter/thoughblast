@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, View, Pressable } from "react-native";
+import { Dimensions, StyleSheet, View, Pressable, Text } from "react-native";
 import { theme } from "../../Styles/theme";
 import elevatedShadowProps from "../../Styles/elevatedShadowProps";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,8 @@ import { addThought, updateThought } from "../../redux/actions/thoughtActions";
 import * as FileSystem from "expo-file-system";
 import NewThoughtCreationIcon from "./NewThoughtCreationIcon";
 import { RECORDING_OPTIONS_PRESET_HIGH_QUALITY } from "./audioRecodingPresets";
+
+const MAX_RECORDING_TIME_SEC = 60;
 
 const styles = StyleSheet.create({
   newThoughtButtonContainerView: {
@@ -44,8 +46,12 @@ const styles = StyleSheet.create({
     minWidth: 32,
     borderRadius: 8,
     width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   stopRecordingPressable: {},
+  timer: { fontWeight: "bold", color: theme.colorPalette[50] },
 });
 
 const NewThoughtButton = () => {
@@ -56,17 +62,24 @@ const NewThoughtButton = () => {
   );
   const [capturingAudio, setCapturingAudio] = useState(false);
   const [recording, setRecording] = useState(undefined);
+  const [timer, setTimer] = useState(MAX_RECORDING_TIME_SEC);
 
   useEffect(() => {
-    if (capturingAudio === true) {
-      setTimeout(() => {
-        // If still capturing after max Time.
-        if (capturingAudio === true) {
-          onStopRecording();
-        }
-      }, 1000 ** 60 * 3);
+    let interval = null;
+    if (capturingAudio) {
+      interval = setInterval(() => {
+        setTimer((timer) => timer - 1);
+      }, 1000);
+    } else if (!capturingAudio && timer !== 0) {
+      clearInterval(interval);
     }
-  }, [capturingAudio]);
+    if (timer <= 0) {
+      onStopRecording();
+      setTimer(MAX_RECORDING_TIME_SEC);
+      setCapturingAudio(false);
+    }
+    return () => clearInterval(interval);
+  }, [capturingAudio, timer]);
 
   const onClickCreateThought = () => {
     navigate("/");
@@ -168,7 +181,9 @@ const NewThoughtButton = () => {
                     onStopRecording();
                   }}
                 >
-                  <View style={styles.recordInProgressContainer} />
+                  <View style={styles.recordInProgressContainer}>
+                    <Text style={styles.timer}>{timer}</Text>
+                  </View>
                 </Pressable>
               ) : (
                 <NewThoughtCreationIcon
