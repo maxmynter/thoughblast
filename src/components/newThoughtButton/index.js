@@ -179,6 +179,7 @@ const NewThoughtButton = () => {
                   style={styles.stopRecordingPressable}
                   onPress={() => {
                     onStopRecording();
+                    setTimer(MAX_RECORDING_TIME_SEC);
                   }}
                 >
                   <View style={styles.recordInProgressContainer}>
